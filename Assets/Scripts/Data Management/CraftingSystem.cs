@@ -3,34 +3,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
-using static UnityEditor.Progress;
 
-abstract class Recipe
+struct Recipe
 {
     /// <summary>
     /// Recipe Name
     /// </summary>
-    public abstract string Name { get; }
+    public string name;
     /// <summary>
     /// Recipe Id
     /// </summary>
-    public abstract int RecipeId { get; }
-    public abstract string Description { get; }
+    public int recipeId;
+    /// <summary>
+    /// Recipe Description
+    /// </summary>
+    public string description;
     /// <summary>
     /// The intake of this recipe, <ItemId, ItemCount>
     /// </summary>
-    public abstract Dictionary<Item, int> Inputs { get; }
+    public Dictionary<Item, int> inputs;
     /// <summary>
     /// The outcome of this recipe, <ItemId, ItemCount>
     /// </summary>
-    public abstract Dictionary<Item, int> Outputs { get; }
+    public Dictionary<Item, int> outputs;
     /// <summary>
     /// Time (in seconds) to complete this recipe
     /// </summary>
-    public abstract int Time { get; }
+    public int time;
+    /// <summary>
+    /// Prerequisite storyline level
+    /// </summary>
+    public int storyLineLevel;
 }
 
 static class CraftingSystem
@@ -39,16 +42,19 @@ static class CraftingSystem
     /// <para>Examine the ture output</para>
     /// <br>[IN 3] + [OUT 2] => [TRUEOUT -1]</br>
     /// <br>[IN 3] + [OUT 4] => [TRUEOUT 1]</br>
+    /// <br>[IN 3] + [OUT 0] => [TRUEOUT -3]</br>
     /// </summary>
     /// <param name="_Rcp">The recipe</param>
     /// <returns>ture output</returns>
-    static private Dictionary<Item, int> CalcTrueOut(Recipe _Rcp)
+    static private Dictionary<Item, int> CalcDelta(Recipe _Rcp)
     {
-        var trueOut = new Dictionary<Item, int>(_Rcp.Outputs);
+        var trueOut = new Dictionary<Item, int>(_Rcp.outputs);
 
-        foreach (var inItem in _Rcp.Inputs)
-            if (_Rcp.Outputs.ContainsKey(inItem.Key))
+        foreach (var inItem in _Rcp.inputs)
+            if (_Rcp.outputs.ContainsKey(inItem.Key))
                 trueOut[inItem.Key] -= inItem.Value;
+            else
+                trueOut.Add(inItem.Key, -inItem.Value);
 
         return trueOut;
     }
@@ -61,7 +67,7 @@ static class CraftingSystem
     /// <param name="_Src">Inventory</param>
     static private void Craft_Unchecked(Recipe _Rcp, Inventory _Src)
     {
-        foreach (var inItem in _Rcp.Inputs)
+        foreach (var inItem in _Rcp.inputs)
         {
             int need = inItem.Value;
             foreach (var item in _Src.Items)
@@ -70,12 +76,12 @@ static class CraftingSystem
                     need -= ((StackableItem)item).Remove(need);
                 }
             // Remove empty
-            var itemsToRemove = _Src.Items.Where(f => f is StackableItem item && item.Stacked == 0);
+            var itemsToRemove = _Src.Items.Where(f => f is StackableItem item && item.Stacked == 0).ToList();
             foreach (var item in itemsToRemove)
                 _Src.Items.Remove(item);
 
         }
-        foreach (var outItem in _Rcp.Outputs)
+        foreach (var outItem in _Rcp.outputs)
         {
             int left = outItem.Value;
             if (outItem.Key is StackableItem)
@@ -104,9 +110,9 @@ static class CraftingSystem
     /// <param name="_Src">The inventory to provide inputs</param>
     static public void Craft(Recipe _Rcp, Inventory _Src)
     {
-        var trueOut = CalcTrueOut(_Rcp);
+        var deltaRecipe = CalcDelta(_Rcp);
 
-        foreach (var inItem in _Rcp.Inputs)
+        foreach (var inItem in _Rcp.inputs)
         {
             int need = inItem.Value;
             foreach (var item in _Src.Items)
@@ -119,7 +125,7 @@ static class CraftingSystem
         }
 
         int spaceReq = 0;
-        foreach (var outItem in trueOut)
+        foreach (var outItem in deltaRecipe)
         {
             int need = outItem.Value;
             if (outItem.Key is StackableItem)
@@ -159,17 +165,16 @@ static class CraftingSystem
         else return;// Not enough spaces
     }
 }
-class ExampleRecipe : Recipe
+class ExampleRecipe
 {
-    public override string Name => "Example_R";
-
-    public override int RecipeId => 1;
-
-    public override string Description => "An Example Recipe";
-
-    public override Dictionary<Item, int> Inputs => new Dictionary<Item, int> { { new ExampleItem(), 2 } };
-
-    public override Dictionary<Item, int> Outputs => new Dictionary<Item, int> { { new ExampleChargeableItem(), 2 } };
-
-    public override int Time => 10;
+    public static readonly Recipe recipe = new()
+    {
+        name = "Example_R",
+        recipeId = 1,
+        description = "An Example Recipe",
+        inputs = new Dictionary<Item, int> { { new ExampleItem(), 2 } },
+        outputs = new Dictionary<Item, int> { { new ExampleChargeableItem(), 2 } },
+        time = 10,
+        storyLineLevel = 12,
+    };
 }

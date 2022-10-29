@@ -1,9 +1,4 @@
-
-
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using static UnityEditor.Progress;
 
 class Inventory
 {

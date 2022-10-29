@@ -48,8 +48,9 @@ public class DataManagementTest : MonoBehaviour
         Debug.Log("removed:");
         Debug.Log(inv.RemoveItem(0, 10));
         inv.SplitItem(0, 1);
+        inv.AddCap(1);
 
-
+        CraftingSystem.Craft(ExampleRecipe.recipe, inv);
     }
 
     // Update is called once per frame

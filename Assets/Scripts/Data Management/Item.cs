@@ -1,8 +1,6 @@
 
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using UnityEngine.SocialPlatforms;
 
 /// <summary>
 /// Basic Item class, implement this while creating any item class
@@ -73,8 +71,9 @@ abstract class ChargeableItem : Item
         if (_Amount <= 0) return 0;
         if (Charged - _Amount < 0)
         {
+            var ret = Charged;
             Charged = 0;
-            return Charged;
+            return ret;
         }
         else
         {
@@ -134,8 +133,9 @@ abstract class StackableItem : Item
         if (_Amount <= 0) return 0;
         if (Stacked - _Amount < 0)
         {
+            var ret = Stacked;
             Stacked = 0;
-            return Stacked;
+            return ret;
         }
         else
         {

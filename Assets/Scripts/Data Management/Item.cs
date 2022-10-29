@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine.SocialPlatforms;
@@ -18,7 +19,7 @@ abstract class Item
     public string Name { get; }
     public int ID { get; }
 
-    public Descriptor Descriptor { get; }
+    public abstract Descriptor Descriptor { get; }
 
     /// <summary>
     /// Get a copy of an Item
@@ -162,9 +163,22 @@ class ExampleItem : StackableItem, IUsable
     public ExampleItem(ExampleItem _Item) : base(_Item)
     { }
 
-    public ExampleItem() : base() { }
+    public ExampleItem() : base()
+    { }
 
     public override int MaxStack => 2;
+
+    static Descriptor descriptor = new Descriptor
+    {
+        brief = "An example item",
+        properties = new Dictionary<string, string>
+        {
+            {"Item_Size","example size"},
+            { "Detailed_IUsable", "use a example item" },
+            { "Detailed_StackableItem", "stack up to 2" }
+        }
+    };
+    public override Descriptor Descriptor => descriptor;
 
 
     /// <summary>

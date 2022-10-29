@@ -7,14 +7,6 @@ using System.Collections.Generic;
 struct Descriptor
 {
     /// <summary>
-    /// Name of this descriptor
-    /// </summary>
-    public string name;
-    /// <summary>
-    /// ID of this descriptor
-    /// </summary>
-    public int id;
-    /// <summary>
     /// Breif introduction, one sentence
     /// </summary>
     public string brief;

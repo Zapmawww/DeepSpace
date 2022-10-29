@@ -10,14 +10,10 @@ using UnityEngine.SocialPlatforms;
 abstract class Item
 {
     protected Item(Item _Item)
-    {
-        Name = _Item.Name;
-        ID = _Item.ID;
-        Descriptor = _Item.Descriptor;
-    }
+    { }
     protected Item() { }
-    public string Name { get; }
-    public int ID { get; }
+    public abstract string Name { get; }
+    public abstract int ID { get; }
 
     public abstract Descriptor Descriptor { get; }
 
@@ -46,14 +42,15 @@ abstract class ChargeableItem : Item
     /// <summary>
     /// Current Status
     /// </summary>
-    public int Charged { get; private set; }
+    public int Charged { get; private set; } = 0;
     /// <summary>
     /// Charge the item
     /// </summary>
-    /// <param name="_Amount">How many is supposed to be charge</param>
+    /// <param name="_Amount">How many is supposed to be charge, no effects if less than 0</param>
     /// <returns>Actually amount charged (before overflow)</returns>
     public int Charge(int _Amount)
     {
+        if (_Amount <= 0) return 0;
         if (_Amount + Charged > MaxCharge)
         {
             var ret = MaxCharge - Charged;
@@ -69,10 +66,11 @@ abstract class ChargeableItem : Item
     /// <summary>
     /// Discharge the item
     /// </summary>
-    /// <param name="_Amount">How many is supposed to be discharge</param>
+    /// <param name="_Amount">How many is supposed to be discharge, no effects if less than 0</param>
     /// <returns>Actually amount discharged (before fully discharged)</returns>
     public int Discharge(int _Amount)
     {
+        if (_Amount <= 0) return 0;
         if (Charged - _Amount < 0)
         {
             Charged = 0;
@@ -104,15 +102,16 @@ abstract class StackableItem : Item
     /// <summary>
     /// Current status
     /// </summary>
-    public int Stacked { get; private set; }
+    public int Stacked { get; private set; } = 0;
 
     /// <summary>
     /// Add some to this stack
     /// </summary>
-    /// <param name="_Amount">How many is supposed to be added</param>
+    /// <param name="_Amount">How many is supposed to be added, no effects if less than 0</param>
     /// <returns>Actually amount added (before Exceeding the stack limit)</returns>
     public int Add(int _Amount)
     {
+        if (_Amount <= 0) return 0;
         if (_Amount + Stacked > MaxStack)
         {
             var ret = MaxStack - Stacked;
@@ -128,10 +127,11 @@ abstract class StackableItem : Item
     /// <summary>
     /// Remove some from this stack
     /// </summary>
-    /// <param name="_Amount">How many is supposed to be removed</param>
+    /// <param name="_Amount">How many is supposed to be removed, no effects if less than 0</param>
     /// <returns>Actually amount removed (before nothing is left)</returns>
     public int Remove(int _Amount)
     {
+        if (_Amount <= 0) return 0;
         if (Stacked - _Amount < 0)
         {
             Stacked = 0;
@@ -166,6 +166,8 @@ class ExampleItem : StackableItem, IUsable
     public ExampleItem() : base()
     { }
 
+    public override string Name => "Example";
+    public override int ID => 1;
     public override int MaxStack => 2;
 
     static Descriptor descriptor = new Descriptor
@@ -173,13 +175,12 @@ class ExampleItem : StackableItem, IUsable
         brief = "An example item",
         properties = new Dictionary<string, string>
         {
-            {"Item_Size","example size"},
+            { "Item_Size", "example size" },
             { "Detailed_IUsable", "use a example item" },
             { "Detailed_StackableItem", "stack up to 2" }
         }
     };
     public override Descriptor Descriptor => descriptor;
-
 
     /// <summary>
     /// ExampleItem Use()
@@ -197,5 +198,36 @@ class ExampleItem : StackableItem, IUsable
     public override Item Clone()
     {
         return new ExampleItem(this);
+    }
+}
+
+class ExampleChargeableItem : ChargeableItem
+{
+    public ExampleChargeableItem(ExampleChargeableItem _Item) : base(_Item)
+    { }
+    public ExampleChargeableItem() : base()
+    { }
+
+    public override int MaxCharge => 100;
+    public override string Name => "Chargeable1";
+    public override int ID => 2;
+
+    static Descriptor descriptor = new Descriptor
+    {
+        brief = "An example item",
+        properties = new Dictionary<string, string>
+        {
+            { "Detailed_Info", "Super duper charging item with 100 charges." },
+            { "Detailed_ChargeableItem", "charged up to 100" }
+        }
+    };
+    public override Descriptor Descriptor => descriptor;
+    /// <summary>
+    /// Copy this ExampleChargeableItem
+    /// </summary>
+    /// <returns>A new ExampleItem stores the same data from this</returns>
+    public override Item Clone()
+    {
+        return new ExampleChargeableItem(this);
     }
 }

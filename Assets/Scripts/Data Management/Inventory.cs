@@ -77,6 +77,7 @@ class Inventory
         {
             StackableItem si = (StackableItem)item;
             if (_Amount >= si.Stacked) { int ret = si.Stacked; Items.RemoveAt(_Index); return ret; }
+            else si.Remove(_Amount);
         }
         return _Amount;
     }

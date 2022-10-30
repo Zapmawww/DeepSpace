@@ -19,13 +19,13 @@ struct Recipe
     /// </summary>
     public string description;
     /// <summary>
-    /// The intake of this recipe, <ItemId, ItemCount>
+    /// The intake of this recipe, [ItemId, [ItemPred, ItemCount]]
     /// </summary>
-    public Dictionary<Item, int> inputs;
+    public Dictionary<Item, Tuple<Func<Item, bool>, int>> inputs;
     /// <summary>
-    /// The outcome of this recipe, <ItemId, ItemCount>
+    /// The outcome of this recipe, [ItemId, [ItemGen, ItemCount]]
     /// </summary>
-    public Dictionary<Item, int> outputs;
+    public Dictionary<Item, Tuple<Func<Item>, int>> outputs;
     /// <summary>
     /// Time (in seconds) to complete this recipe
     /// </summary>
@@ -40,7 +40,7 @@ static class CraftingSystem
 {
     /// <summary>
     /// <para>Examine the ture output</para>
-    /// <br>[IN 3] + [OUT 2] => [TRUEOUT -1]</br>
+    /// <br>[IN 0] + [OUT 2] => [TRUEOUT 2]</br>
     /// <br>[IN 3] + [OUT 4] => [TRUEOUT 1]</br>
     /// <br>[IN 3] + [OUT 0] => [TRUEOUT -3]</br>
     /// </summary>
@@ -48,15 +48,16 @@ static class CraftingSystem
     /// <returns>ture output</returns>
     static private Dictionary<Item, int> CalcDelta(Recipe _Rcp)
     {
-        var trueOut = new Dictionary<Item, int>(_Rcp.outputs);
-
+        var delta = new Dictionary<Item, int>();
+        // calculate input as -, output as +
+        foreach (var outItem in _Rcp.outputs)
+            delta.Add(outItem.Key, outItem.Value.Item2);
         foreach (var inItem in _Rcp.inputs)
-            if (_Rcp.outputs.ContainsKey(inItem.Key))
-                trueOut[inItem.Key] -= inItem.Value;
+            if (delta.ContainsKey(inItem.Key))
+                delta[inItem.Key] -= inItem.Value.Item2;
             else
-                trueOut.Add(inItem.Key, -inItem.Value);
-
-        return trueOut;
+                delta.Add(inItem.Key, -inItem.Value.Item2);
+        return delta;
     }
 
     /// <summary>
@@ -67,11 +68,12 @@ static class CraftingSystem
     /// <param name="_Src">Inventory</param>
     static private void Craft_Unchecked(Recipe _Rcp, Inventory _Src)
     {
+        // remove inputs
         foreach (var inItem in _Rcp.inputs)
         {
-            int need = inItem.Value;
+            int need = inItem.Value.Item2;
             foreach (var item in _Src.Items)
-                if (item.GetType() == inItem.Key.GetType())
+                if (inItem.Value.Item1(item)) // Using Pred
                 {
                     need -= ((StackableItem)item).Remove(need);
                 }
@@ -81,14 +83,15 @@ static class CraftingSystem
                 _Src.Items.Remove(item);
 
         }
+        // add outputs
         foreach (var outItem in _Rcp.outputs)
         {
-            int left = outItem.Value;
+            int left = outItem.Value.Item2;
             if (outItem.Key is StackableItem)
             {
                 while (left > 0)
                 {
-                    StackableItem newitem = (StackableItem)outItem.Key.Clone();
+                    StackableItem newitem = (StackableItem)outItem.Value.Item1(); // Using Gen
                     left -= newitem.Add(left);
                     _Src.AddItem(newitem);
                 }
@@ -97,7 +100,7 @@ static class CraftingSystem
             {
                 while (left > 0)
                 {
-                    _Src.AddItem(outItem.Key.Clone());
+                    _Src.AddItem(outItem.Value.Item1()); // Using Gen
                     left--;
                 }
             }
@@ -111,12 +114,12 @@ static class CraftingSystem
     static public void Craft(Recipe _Rcp, Inventory _Src)
     {
         var deltaRecipe = CalcDelta(_Rcp);
-
+        // check input requirements (not delta)
         foreach (var inItem in _Rcp.inputs)
         {
-            int need = inItem.Value;
+            int need = inItem.Value.Item2;
             foreach (var item in _Src.Items)
-                if (item.GetType() == inItem.Key.GetType())
+                if (inItem.Value.Item1(item)) // Using Pred
                 {
                     need -= item is StackableItem ? ((StackableItem)item).Stacked : 1;
                     if (need <= 0) break;
@@ -124,6 +127,7 @@ static class CraftingSystem
             if (need > 0) return;// Not enough inputs
         }
 
+        // check output space requirements (using delta)
         int spaceReq = 0;
         foreach (var outItem in deltaRecipe)
         {
@@ -151,20 +155,23 @@ static class CraftingSystem
                             if (need >= 0) break;
                         }
                 }
-
             }
             else
             {
                 spaceReq += need;
             }
         }
+        // Assertion succeed, craft
         if (_Src.CurrentSize + spaceReq <= _Src.MaxCapacity)
         {
             Craft_Unchecked(_Rcp, _Src);
         }
-        else return;// Not enough spaces
+        else return;// No enough spaces
     }
 }
+/// <summary>
+/// Example Recipe for tests
+/// </summary>
 class ExampleRecipe
 {
     public static readonly Recipe recipe = new()
@@ -172,8 +179,12 @@ class ExampleRecipe
         name = "Example_R",
         recipeId = 1,
         description = "An Example Recipe",
-        inputs = new Dictionary<Item, int> { { new ExampleItem(), 2 } },
-        outputs = new Dictionary<Item, int> { { new ExampleChargeableItem(), 2 } },
+        inputs = new() {
+            { new ExampleItem(), new((Item f) => f is ExampleItem i && i.Stacked == 1, 2) }
+        },
+        outputs = new() {
+            { new ExampleChargeableItem(), new(() => new ExampleChargeableItem(), 2) }
+        },
         time = 10,
         storyLineLevel = 12,
     };

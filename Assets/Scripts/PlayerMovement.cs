@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJump;
 
     public float gravity = -25f;//ÖØÁ¦
-    private Transform groundCheck;
+    public  Transform groundCheck;
     private float groundDistance = 0.1f;
     public LayerMask groundMash;
     private bool isGround;

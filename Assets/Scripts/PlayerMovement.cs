@@ -10,19 +10,19 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
-    public float walkSpeed = 10f;//ÒÆ¶¯ËÙ¶È
-    public float runSpeed = 15f;//±¼ÅÜËÙ¶È
+    public float walkSpeed = 10f;//ç§»åŠ¨é€Ÿåº¦
+    public float runSpeed = 15f;//å¥”è·‘é€Ÿåº¦
     public float speed;
-    public Vector3 moveDriction;//ÉèÖÃÒÆ¶¯·½Ïò
+    public Vector3 moveDriction;//è®¾ç½®ç§»åŠ¨æ–¹å‘
     public bool isRun;
 
-    //ÌøÔ¾
-    public float jumpForce = 3f;//ÌøÔ¾µÄÁ¦
-    public Vector3 velocity;//Á¦
+    //è·³è·ƒ
+    public float jumpForce = 3f;//è·³è·ƒçš„åŠ›
+    public Vector3 velocity;//åŠ›
     private bool isJump;
-
-    public float gravity = -25f;//ÖØÁ¦
-    public  Transform groundCheck;
+    
+    public float gravity = -25f;//é‡åŠ›
+    private Transform groundCheck;
     private float groundDistance = 0.1f;
     public LayerMask groundMash;
     private bool isGround;
@@ -30,19 +30,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slopeForce = 6.0f;
     [SerializeField] private float slopeForceRayLenth = 2.0f;
 
-    /*ÉèÖÃ¼üÎ»*/
+    /*è®¾ç½®é”®ä½*/
     [Header("Keyboard Setting")]
-    [SerializeField] private KeyCode runInputName;//±¼ÅÜ¼üÎ»
-    [SerializeField] private KeyCode jumpInputName;//ÌøÔ¾¼üÎ»
+    [SerializeField]private KeyCode runInputName;//å¥”è·‘é”®ä½
+    [SerializeField] private KeyCode jumpInputName ;//è·³è·ƒé”®ä½
 
     private void Start()
     {
-        //»ñÈ¡playerµÄCharacterController×é¼ş
+        //è·å–playerçš„CharacterControllerç»„ä»¶
         characterController = GetComponent<CharacterController>();
         runInputName = KeyCode.LeftShift;
         jumpInputName = KeyCode.Space;
         groundCheck = GameObject.Find("Player/CheckGround").GetComponent<Transform>();
-
+  
     }
 
     private void Update()
@@ -53,9 +53,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        //ÒÆ¶¯ºÍ±¼ÅÜ
-        float hor = Input.GetAxis("Horizontal");//»ñÈ¡Ë®Æ½ÖáÖáÌå
-        float ver = Input.GetAxis("Vertical");//»ñÈ¡´¹Ö±ÖáÖáÌå
+        //ç§»åŠ¨å’Œå¥”è·‘
+        float hor = Input.GetAxis("Horizontal");//è·å–æ°´å¹³è½´è½´ä½“
+        float ver = Input.GetAxis("Vertical");//è·å–å‚ç›´è½´è½´ä½“
         isRun = Input.GetKey(runInputName);
         if (isRun)
         {
@@ -67,20 +67,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         moveDriction = (transform.right * hor + transform.forward * ver).normalized;
-        characterController.Move(moveDriction * speed * Time.deltaTime);
+        characterController.Move(moveDriction*speed*Time.deltaTime);
 
-        //ÌøÔ¾
-        if (isGround == false)//²»ÔÚµØÃæÉÏ£¨¿ÕÖĞ£©Ê©¼ÓÏòÏÂµÄÖØÁ¦
+        //è·³è·ƒ
+        if (isGround == false)//ä¸åœ¨åœ°é¢ä¸Šï¼ˆç©ºä¸­ï¼‰æ–½åŠ å‘ä¸‹çš„é‡åŠ›
         {
             velocity.y += gravity * Time.deltaTime;
         }
-        characterController.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity*Time.deltaTime);
         Jump();
 
-        //Èç¹ûÔÚĞ±ÆÂÉÏÒÆ¶¯
+        //å¦‚æœåœ¨æ–œå¡ä¸Šç§»åŠ¨
         if (OnSlope())
         {
-            //Ôö¼ÓÒ»¸öÏòÏÂµÄÁ¦
+            //å¢åŠ ä¸€ä¸ªå‘ä¸‹çš„åŠ›
             characterController.Move(Vector3.down * characterController.height / 2 * slopeForce * Time.deltaTime);
         }
 
@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void CheckGround()
     {
-        //ÅĞ¶ÏÊÇ·ñÔÚµØÃæÉÏ
+        //ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
         isGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMash);
         if (isGround && velocity.y <= 0)
         {
@@ -106,18 +106,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //¼ì²âÊÇ·ñÔÚÆ½ÃæÉÏ
+    //æ£€æµ‹æ˜¯å¦åœ¨å¹³é¢ä¸Š
     public bool OnSlope()
     {
         if (isJump)
             return false;
-        //ÏòÏÂ·¢³öÉäÏß£¬¼ì²éÊÇ·ñÔÚĞ±ÆÂÉÏ
-        if (Physics.Raycast(transform.position, new Vector3(0, -1, 0), out RaycastHit hit, characterController.height / 2 * slopeForceRayLenth))
+        //å‘ä¸‹å‘å‡ºå°„çº¿ï¼Œæ£€æŸ¥æ˜¯å¦åœ¨æ–œå¡ä¸Š
+        if(Physics.Raycast(transform.position,new Vector3(0,-1,0),out RaycastHit hit, characterController.height/2*slopeForceRayLenth))
         {
-            if (hit.normal != Vector3.up)
+            if(hit.normal != Vector3.up)
             {
                 return true;
-            }
+            }              
         }
         return false;
     }

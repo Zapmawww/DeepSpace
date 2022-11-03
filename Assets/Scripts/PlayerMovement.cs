@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         runInputName = KeyCode.LeftShift;
         jumpInputName = KeyCode.Space;
-        groundCheck = GameObject.Find("Player/CheckGround").GetComponent<Transform>();
+        //groundCheck = GameObject.Find("Player/CheckGround").GetComponent<Transform>();
 
     }
 

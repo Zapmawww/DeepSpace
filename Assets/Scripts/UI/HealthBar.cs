@@ -8,7 +8,22 @@ public class HealthBar : MonoBehaviour
     public Slider slider; //Health bar slider
     public Gradient gradient; //血条的颜色渐变
     public Image fill;
-    
+
+  //  [SerializeField] public GameObject healthPointTxt;
+   // [SerializeField] private int healthPoint;
+
+   public static HealthBar Instance; //Instantiating the MenuManager
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+   // void Update()
+   // {
+   //     healthPoint = Player.Instance.currentHealth;
+   //     healthPointTxt.GetComponentInChildren<Text>().text = " " + healthPoint + " %";
+   // }
 
     public void SetMaxHealth(int health) //直接在代码中控制slider的最大值
     {
@@ -24,5 +39,6 @@ public class HealthBar : MonoBehaviour
 
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
+
 
 }

@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class WeaponControl : MonoBehaviour
 {
     public Transform shootPoint;
-    public int bulletsMag = 30;//Ò»¸öµ¯Ï»µÄ×Óµ¯ÊıÁ¿
-    public int range = 100;//Éä³Ì
-    public int bulletLeft = 300;//±¸µ¯
-    public int currentBullet;//µ±Ç°×Óµ¯Êı
+    public int bulletsMag = 30;//ä¸€ä¸ªå¼¹åŒ£çš„å­å¼¹æ•°é‡
+    public int range = 100;//å°„ç¨‹
+    public int bulletLeft = 300;//å¤‡å¼¹
+    public int currentBullet;//å½“å‰å­å¼¹æ•°
 
     private bool gunShootInput;
 
-    public float fireRate = 0.1f;//ÉäËÙ
-    private float fireTime;//¼ÆÊ±Æ÷
+    public float fireRate = 0.1f;//å°„é€Ÿ
+    private float fireTime;//è®¡æ—¶å™¨
 
     [Header("KeySet")]
-    [SerializeField] private KeyCode reloadInputName;
+    [SerializeField]private KeyCode reloadInputName;
 
     [Header("UI")]
     public Text AmmoTextUI;
@@ -34,8 +34,8 @@ public class WeaponControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gunShootInput = Input.GetMouseButton(0);//¼ì²âÊó±ê×ó¼üÊÇ·ñ°´ÏÂ
-        if (gunShootInput)
+        gunShootInput = Input.GetMouseButton(0);//æ£€æµ‹é¼ æ ‡å·¦é”®æ˜¯å¦æŒ‰ä¸‹
+        if(gunShootInput)
         {
             GunFire();
         }
@@ -49,37 +49,37 @@ public class WeaponControl : MonoBehaviour
         {
             Reload();
         }
-    }
+     }
 
     /// <summary>
-    /// Éä»÷
+    /// å°„å‡»
     /// </summary>
     public void GunFire()
     {
-        //¿ØÖÆÉäËÙ£¬Èç¹û¼ÆÊ±Æ÷±ÈÉäËÙ»¹Ğ¡£¬Ìø³ö·½·¨£¨²»Éä»÷
-        //Ã¿Ö¡¼õÉÙÉäÏßÖ´ĞĞµÄ´ÎÊı£¬´Ó¶ø½µµÍÉäËÙ
-        //×Óµ¯Îª0Ê±ÍË³öÉä»÷¡£
+        //æ§åˆ¶å°„é€Ÿï¼Œå¦‚æœè®¡æ—¶å™¨æ¯”å°„é€Ÿè¿˜å°ï¼Œè·³å‡ºæ–¹æ³•ï¼ˆä¸å°„å‡»
+        //æ¯å¸§å‡å°‘å°„çº¿æ‰§è¡Œçš„æ¬¡æ•°ï¼Œä»è€Œé™ä½å°„é€Ÿ
+        //å­å¼¹ä¸º0æ—¶é€€å‡ºå°„å‡»ã€‚
         if (fireTime < fireRate || currentBullet <= 0)
         {
             return;
         }
-
-        //Éä»÷
+            
+        //å°„å‡»
         RaycastHit hit;
-        Vector3 shootDirection = shootPoint.forward;//Éä»÷·½ÏòÏòÇ°
-        if (Physics.Raycast(shootPoint.position, shootDirection, out hit, range))//100Âë£¨range£©µÄÉä³Ì£¬Èç¹û»÷ÖĞÎïÌå£¬Ôò»á½«ĞÅÏ¢´æ·Åµ½ hit ÖĞ
+        Vector3 shootDirection = shootPoint.forward;//å°„å‡»æ–¹å‘å‘å‰
+        if(Physics.Raycast(shootPoint.position,shootDirection,out hit,range))//100ç ï¼ˆrangeï¼‰çš„å°„ç¨‹ï¼Œå¦‚æœå‡»ä¸­ç‰©ä½“ï¼Œåˆ™ä¼šå°†ä¿¡æ¯å­˜æ”¾åˆ° hit ä¸­
         {
-            Debug.Log(hit.transform.name + "»÷ÖĞ");
+            Debug.Log(hit.transform.name + "å‡»ä¸­");
         }
 
-        currentBullet--;//Ã¿´ÎÉä»÷×Óµ¯¼õÒ»
+        currentBullet--;//æ¯æ¬¡å°„å‡»å­å¼¹å‡ä¸€
         UpdateAmmoUI();
 
         fireTime = 0;
     }
 
     /// <summary>
-    /// ×Óµ¯UI
+    /// å­å¼¹UI
     /// </summary>
     public void UpdateAmmoUI()
     {
@@ -87,18 +87,18 @@ public class WeaponControl : MonoBehaviour
     }
 
     /// <summary>
-    /// »»×Óµ¯
+    /// æ¢å­å¼¹
     /// </summary>
     public void Reload()
     {
-        if (bulletLeft <= 0) return;
+        if(bulletLeft <=0) return;
 
-        int bulletNeed = bulletsMag - currentBullet;//ËùĞèÌî×°µÄµ¯Ò©ÊıÁ¿
+        int bulletNeed = bulletsMag - currentBullet;//æ‰€éœ€å¡«è£…çš„å¼¹è¯æ•°é‡
 
         //int bullectReduce = (bulletLeft >= bulletNeed) ? bulletNeed : bulletLeft;
 
-
-        if (bulletLeft >= bulletNeed)
+      
+        if(bulletLeft >= bulletNeed)
         {
             bulletLeft = bulletLeft - bulletNeed;
         }
@@ -107,9 +107,9 @@ public class WeaponControl : MonoBehaviour
             bulletLeft = 0;
             bulletsMag = currentBullet + bulletLeft;
         }
-
-        //bulletLeft -= bullectReduce;//¼õÉÙµÄ±¸µ¯
-        currentBullet += bulletNeed;//µ±Ç°×Óµ¯Êı
+       
+        //bulletLeft -= bullectReduce;//å‡å°‘çš„å¤‡å¼¹
+        currentBullet += bulletNeed;//å½“å‰å­å¼¹æ•°
         UpdateAmmoUI();
     }
 }

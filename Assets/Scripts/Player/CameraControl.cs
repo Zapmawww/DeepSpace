@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// ÉãÏñ»úµÄĞı×ª
+/// æ‘„åƒæœºçš„æ—‹è½¬
 /// </summary>
+
 
 public class CameraControl : MonoBehaviour
 {
-    public float mouseSensitivity = 100f;//ÊÓÏßÁéÃô¶È
-    public Transform playerBody;//Íæ¼ÒµÄÎ»ÖÃ
+    public float mouseSensitivity = 100f;//è§†çº¿çµæ•åº¦
+    public Transform playerBody;//ç©å®¶çš„ä½ç½®
     public float yRotation = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Òş²Ø¹â±ê
+        //éšè—å…‰æ ‡
         Cursor.lockState = CursorLockMode.Locked;
 
     }
@@ -25,12 +26,12 @@ public class CameraControl : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        yRotation -= mouseY;//½«ÉÏÏÂĞı×ªÖáÖµ½øĞĞÀÛ¼Ó£¨Êó±ê·´×ª
+        yRotation -= mouseY;//å°†ä¸Šä¸‹æ—‹è½¬è½´å€¼è¿›è¡Œç´¯åŠ ï¼ˆé¼ æ ‡åè½¬
 
-        yRotation = Mathf.Clamp(yRotation, -80f, 80f);//Ğı×ª½Ç¶ÈÉèÖÃ
+        yRotation = Mathf.Clamp(yRotation, -80f, 80f);//æ—‹è½¬è§’åº¦è®¾ç½®
 
-        transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);//ºáÏòĞı×ª
+        transform.localRotation =Quaternion.Euler(yRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up*mouseX);//æ¨ªå‘æ—‹è½¬
 
 
     }

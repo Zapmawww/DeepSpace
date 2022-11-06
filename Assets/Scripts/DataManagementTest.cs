@@ -92,6 +92,7 @@ public class DataManagementTest : MonoBehaviour
             // Death action test
             CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 50 }, "self hit 50");
 
+            CombatSystem.Clean();
         }
 
     }

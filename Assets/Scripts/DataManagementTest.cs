@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class DataManagementTest : MonoBehaviour
@@ -51,6 +52,30 @@ public class DataManagementTest : MonoBehaviour
         inv.AddCap(1);
 
         CraftingSystem.Craft(ExampleRecipe.recipe, inv);
+
+        // basic combatant is actually armored, damage invoked correctly
+        var cbt = gameObject.GetComponent<BasicCombatant>();
+        if (cbt != null)
+        {
+            Debug.Log("Combat test:");
+            Debug.Log(cbt.HitPoint);
+            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 5 }, "self hit 5");
+            Debug.Log(cbt.HitPoint);
+            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 2 }, "self heal 2");
+            Debug.Log(cbt.HitPoint);
+            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 5 }, "self heal 5");
+            Debug.Log(cbt.HitPoint);
+
+            var rawHealCnt = CombatSystem.TargetLogAnalyse(cbt, (double acc, CombatSystem.ComabatLog log) => acc + (log.cm is Healer h ? h.RawValue : 0));
+            Debug.Log(rawHealCnt);
+            var finalHealCnt = CombatSystem.TargetLogAnalyse(cbt, (double acc, CombatSystem.ComabatLog log) => acc + (log.cm is Healer h ? h.FinalValue : 0));
+            Debug.Log(finalHealCnt);
+
+
+            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 50 }, "self hit 50");
+
+        }
+
     }
 
     // Update is called once per frame

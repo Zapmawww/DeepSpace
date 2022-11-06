@@ -1,7 +1,17 @@
-﻿abstract class CombatMessenger
+﻿
+/// <summary>
+/// Used for transfer combat info from a combatant to another
+/// </summary>
+abstract class CombatMessenger
 {
+    /// <summary>
+    /// Raw damage, heal, buff time, etc.
+    /// </summary>
     public double RawValue;
-    public double FinalValue;
+    /// <summary>
+    /// Actual value that take effects
+    /// </summary>
+    public double FinalValue = 0;
 }
 
 class Healer : CombatMessenger
@@ -12,4 +22,9 @@ class Healer : CombatMessenger
 class DamageDealer : CombatMessenger
 {
 
+}
+
+class Buffs : CombatMessenger
+{
+    public string buffName;
 }

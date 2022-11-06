@@ -13,7 +13,7 @@ class BasicCombatant : MonoBehaviour
     /// Simple healing algorithm. Modify by deriving new classes.
     /// </summary>
     /// <param name="_CM">make sure RAW healing is passed in</param>
-    virtual public void Heal(CombatMessenger _CM)
+    virtual protected void Heal(CombatMessenger _CM)
     {
         if (_CM.RawValue == 0) return;
 
@@ -27,7 +27,7 @@ class BasicCombatant : MonoBehaviour
     /// Simple damage algorithm. Modify by deriving new classes.
     /// </summary>
     /// <param name="_CM">make sure RAW damage is passed in</param>
-    virtual public void Damage(CombatMessenger _CM)
+    virtual protected void Damage(CombatMessenger _CM)
     {
         if (_CM.RawValue == 0) return;
 
@@ -39,6 +39,28 @@ class BasicCombatant : MonoBehaviour
         else
             _CM.FinalValue = _CM.RawValue;
         HitPoint -= _CM.FinalValue;
+    }
+    /// <summary>
+    /// Simply invoke heal or damage according to the CombatMessenger type
+    /// </summary>
+    /// <param name="_CM">The CombatMessenger that contains the combat info</param>
+    /// <returns></returns>
+    virtual public bool ReceiveCM(CombatMessenger _CM)
+    {
+        if (_CM is Healer)
+        {
+            Heal(_CM);
+            return true;
+        }
+        else if (_CM is DamageDealer)
+        {
+            Damage(_CM);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /// <summary>

@@ -4,9 +4,12 @@ using UnityEngine;
 
 class ExampleArmoredCombatant : BasicCombatant
 {
+    /// <summary>
+    /// Resistence to block damage
+    /// </summary>
     public double Armor { get; protected set; } = 1;
 
-    override public void Damage(CombatMessenger _CM)
+    override protected void Damage(CombatMessenger _CM)
     {
         if (_CM.RawValue <= Armor) return;
 

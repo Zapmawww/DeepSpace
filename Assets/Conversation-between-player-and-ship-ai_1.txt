@@ -1,0 +1,30 @@
+Mission 1: Newbie tasks
+Players wake up
+Players: Eva, What's going on now?
+Eva(AI): We have now fallen into an unknown planet
+Players: So how's our ship?
+Eva(AI): Extensive damage and, most importantly, damage to the energy pods
+Players: Is it safe outside the ship?
+Eva(AI): I've checked the outside and everything is fine
+Players: OK, let's take a look outside
+
+UI prompt panel
+Please use the keyboard WASD key to move
+(After player completion)
+Please use the space bar to jump
+(After player completion)
+Please use the F key to exit the door
+(When players meet monsters)
+Please use the right mouse button to aim your attack
+(When the player has killed the monster)
+Please use the E key to pick up the item
+
+Mission 2: Restoration of the airship guide
+After the player picks up the item
+Eva(AI): Let's go back to the ship, there seems to be some material in the warehouse
+After the player gets the materials in the warehouse
+Eva(AI): According to my tests, these two materials can repair the holes in the storage compartment
+After the fix is complete
+Eva(AI): There seem to be three completely different and powerful energies on this continent, and perhaps we can draw on them for a while
+Players: So where's our first stop?
+Eva(AI): The one with fire energy!

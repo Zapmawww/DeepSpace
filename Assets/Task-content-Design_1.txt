@@ -1,0 +1,56 @@
+Mission 1: Newbie tasks
+The ship's AI prompts the player for a novice instruction task
+1? Guiding the movement of players
+2? How to jump
+3? Instructions for exiting the hatch and fighting monsters
+4? How to pick up items dropped by monsters after killing them
+
+Mission 2: Restoration of the airship guide
+1? After killing the monster, return to the ship and be prompted by the AI to go to the warehouse for basic materials
+2? The AI prompts the player to repair the storage bin after getting the basic materials
+3? AI prompts players to explore the Land of Fire after the fix is complete
+
+Mission 3: Explore the Land of Fire
+1? Finding the Castle of Fire
+a) Kill the monster and get the fire energy ball
+b) Explore the surroundings and try to understand the story of the Land of Fire
+2? Explore the Castle of Fire
+a) Unlocking the secrets of the Castle of Fire
+b) Find the core of the fire
+c) Discover the history of the Land of Fire
+
+Players can choose to travel to either the Land of Wood or the Land of Ice
+
+Mission 4: Explore the Land of Ice
+1? Finding the Castle of the Ice
+a) Players must have the Core of Fire on them
+2? Explore the Castle of the Ice
+a) Players need to use the Fire Cores they carry to open the castle gates
+b) Collecting the Eternal Tundra
+c) Find the core of the Ice
+d) Discover the history of the Land of Ice
+
+Mission 5: Explore the Land of Wood
+1? Finding the Castle of the Wood
+2? Players arrive at the castle and find that they cannot enter and need to find the historical inscription at the entrance to the castle
+a) Historical inscriptions record the history of the Land of Wood and suggest to players that the core of the Land of Wood has been lost
+b) The AI prompts the player to enter the forest to find the Wooden Core
+3? Explore the forest and find the wood core
+4? Once found, return to the castle and use the Wooden Core to open the castle gate(Attention! Players will not be able to enter if they have the Core of Fire on them)
+5? Defeat the monsters in the castle and collect the steel wood
+6? Open the altar in the castle and place the Wooden Core into it to learn about the birth of the Land of Earth
+
+Mission 6: Explore the Land of Earth
+1? Kill monsters to get common ore
+2? Explore the Castle of Earth
+a) Complete decryption tasks to obtain rare ores
+b) Get tips on how to bring the Land of Earth back to lif
+3? Using the power of the Wooden Core to restore life to the Land of Earth
+
+Mission 7: Nick
+1? Inside the castle, there exists a number of written records, which are diaries of former people, recording certain details
+2? After completing the Land of Earth quest, the diary owner will appear to talk to the player and provide the player with the fusion materials he has developed
+
+Mission 8: Complete the restoration of the airship
+
+  

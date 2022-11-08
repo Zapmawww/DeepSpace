@@ -1,0 +1,19 @@
+Core resources
+1. The Core of Fire
+The powerful core of power that keeps the Fire Nation running and can melt all things
+2. The Core of Ice
+It is the energy core of the Land of Ice, which is incompatible with the core of fire
+3. The Core of Wood
+It is the core of all life in the Land of Wood and has the power to heal, but for some reason has been lost
+4. Rare Ores
+An ore unique to the Land of Earth, so hard that it cannot be smelted by ordinary means
+
+Kill monsters to get the resources
+1. Fire Energy Sphere
+Obtained by slaying monsters in the Land of Fire, which can power the airship
+2. Eternal Permafrost
+Obtained in the Land of Ice, extremely difficult to thaw, can repair the exterior of the ship
+3. Steel Wood
+Obtained by slaying monsters in the Land of Wood, very hard, but extremely malleable
+4. Common ore
+Obtained by slaying monsters in the Land of Earth, high strength and good conductivity

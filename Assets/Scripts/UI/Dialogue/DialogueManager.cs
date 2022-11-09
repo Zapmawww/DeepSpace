@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] public bool ConversationStart = false;    //Determining if a conversation is over
     [SerializeField] public bool ConversationOver = false;    //Determining if a conversation is over
 
+
+
     void Awake()
     {
         Instance = this;

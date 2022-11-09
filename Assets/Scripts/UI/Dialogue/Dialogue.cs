@@ -6,8 +6,8 @@ using TMPro;
 [System.Serializable]
 public class Dialogue 
 {
-    public string name;   //进行对话的npc的名字
+    public string name;   //npc name
 
     [TextArea(3,10)]
-    public string[] sentences;     //储存要进行的对话
+    public string[] sentences;     //Storage conversations
 }

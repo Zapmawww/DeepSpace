@@ -24,8 +24,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject closeTalkButton;   //Close the conversation
 
 
+    [SerializeField] private GameObject doorButton;
+
+
     [SerializeField] private TMP_Text HealthPoint;    //Text display of health value
     [SerializeField] private TMP_Text OxygenPoint;    //Text display of oxygen value
+    [SerializeField] private TMP_Text doorButtonText;    //open or close
 
 
     [SerializeField] public int currentHealth;       
@@ -38,6 +42,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] public bool GameEnd = false;          //Whether the game wins or loses, the game is end
     [SerializeField] public bool ConversationStart;
     [SerializeField] public bool ConversationOver;
+
+    [SerializeField] public bool doorButtonshowed = false;   //判定门按钮是否显示
+    [SerializeField] public bool doorOpened = false;   //判定门是否开着
+
+
+    //  [SerializeField] public bool CompletedTask_1;    //Determining if the task is completed
+    //  [SerializeField] public bool CompletedTask_2;
+    //  [SerializeField] public bool CompletedTask_3;
+    //  [SerializeField] public bool CompletedTask_4;
+    //  [SerializeField] public bool CompletedTask_5;
+    //  [SerializeField] public bool CompletedTask_6;
+    //  [SerializeField] public bool CompletedTask_7;
+    //  [SerializeField] public bool CompletedTask_8;
+    //   [SerializeField] public bool CompletedTask_9;
+    //   [SerializeField] public bool CompletedTask_10;
+    //   [SerializeField] public bool CompletedTask_11;
 
     public void ShowInGameUI()     //display interface
     {
@@ -161,7 +181,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Replay Game");
         HidePauseMenu();
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void ShowStartTalkButton()   //display button
@@ -213,6 +233,7 @@ public class UIManager : MonoBehaviour
         HideInGameUI();      //隐藏其他界面
         HideStartTalkButton();
         DialogueTrigger.Instance.TriggerDialogue();     //触发对话
+        TaskTrigger.Instance.TriggerTask(); //触发任务
         
     }
 
@@ -233,7 +254,33 @@ public class UIManager : MonoBehaviour
         DialogueManager.Instance.changeBool();
     }
 
+    public void ShowDoorButton()   //display button
+    {
+        Debug.Log("Show door button");
+        doorButtonshowed = true;
+        doorButton.SetActive(true);
+    }
 
+    public void HideDoorButton()   //hide button
+    {
+        Debug.Log("hide door button");
+        doorButtonshowed = false;
+        doorButton.SetActive(false);
+    }
+
+    public void DoorOpen()   //open the door
+    {
+        Debug.Log("open the door");
+        doorOpened = true;
+        Door.Instance.hideDoor1();
+    }
+
+    public void DoorClose()   //close the door
+    {
+        Debug.Log("close the door");
+        doorOpened = false;
+        Door.Instance.showDoor1();
+    }
 
     void Awake()
     {
@@ -255,6 +302,14 @@ public class UIManager : MonoBehaviour
             ShowCloseTalkButton();       //显示按钮
         }
         ConversationStart = DialogueManager.Instance.ConversationStart;
+
+        if (doorOpened)    //修改door button的文本
+        {
+            doorButtonText.text = "CLOSE";
+        } else
+        {
+            doorButtonText.text = "OPEN";
+        }
 
 
         if (currentHealth == 0 || currentOxygen == 0)
@@ -343,7 +398,23 @@ public class UIManager : MonoBehaviour
                 ContinueTalk();
             }
             
+        }
+
+        if (Input.GetKeyUp(KeyCode.G))   //Shortcut keys to Switch to the next dialogue
+        {
+            if (doorButtonshowed) //如果门按钮显示的话，则可以触发
+            {
+                if (doorOpened)
+                {
+                    DoorClose();
+                }
+                else
+                {
+                    DoorOpen();
+                }
+            }
 
         }
+
     }
 }

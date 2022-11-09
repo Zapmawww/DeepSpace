@@ -8,6 +8,12 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Start game");
+        SceneManager.LoadScene(3);
+    }
+
+    public void LoadGame()
+    {
+        Debug.Log("Load game");
         SceneManager.LoadScene(2);
     }
 
@@ -28,6 +34,7 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log("Turn to Main Menu");
         SceneManager.LoadScene(0);
+        //Cursor.lockState = CursorLockMode.None;
 
     }
 }

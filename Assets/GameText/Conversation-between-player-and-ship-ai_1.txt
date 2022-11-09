@@ -8,12 +8,24 @@ Players: Is it safe outside the ship?
 Eva(AI): I've checked the outside and everything is fine
 Players: OK, let's take a look outside
 
+task 1 Please click 'F' key to chat with AI
+task 2 Use the 'WASD' keys to touch the 'white' squares
+task 3 Use the 'space' key to jump to the 'yellow' platform next to you
+task 4 Touch the 'green' square to 'open' the door
+task 5 Touch another 'green' square to 'close' the door
+task 6 Checking the situation of the 'red' facilities
+task 7 Pick up the 'blue' oxygen tank
+task 8 Pick up the 'pink' Material '001'
+task 9 Kill 'black' monster to get 'orange' Material '002'
+task 10 Repairing 'red' facilities
+task 11 Interacting with 'white' facilities, back on Earth
+
 UI prompt panel
 Please use the keyboard WASD key to move
 (After player completion)
 Please use the space bar to jump
 (After player completion)
-Please use the F key to exit the door
+Please use the G key to exit the door
 (When players meet monsters)
 Please use the right mouse button to aim your attack
 (When the player has killed the monster)

@@ -93,7 +93,7 @@ public class EnemyController : MonoBehaviour
         if (FoundPlayer())
         {
             enemyStates = EnemyStates.CHASE;
-            Debug.Log("’“µΩplayers");
+            //Debug.Log("’“µΩplayers");
         }
 
         switch (enemyStates)

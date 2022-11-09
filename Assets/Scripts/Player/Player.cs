@@ -32,7 +32,8 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;     //Synchronised bar values
         healthBar.SetMaxHealth(maxHealth);
 
-        currentOxygen = maxOxygen;
+        currentOxygen = maxOxygen-1;
+        //currentOxygen = maxOxygen;
         oxygenBar.SetMaxOxygen(maxOxygen);
 
     }

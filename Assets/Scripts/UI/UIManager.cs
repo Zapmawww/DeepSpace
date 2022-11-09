@@ -7,15 +7,22 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance; //Instantiating the MenuManager
+    public static UIManager Instance; //Instantiating the MenuManager.cs
 
     [SerializeField] private GameObject InGameUI;    //The normal interface display of the game running
     [SerializeField] private GameObject TaskMenu;    //task menu interface
     [SerializeField] private GameObject PauseMenu;   //pause menu interface
     [SerializeField] private GameObject BagMenu;     //bag menu interface
+
     [SerializeField] private GameObject GameOverDead;  //game over interface, Player dies , with zero health or oxygen
     [SerializeField] private GameObject GameOverLose;  //game over interface, Player lose the game
     [SerializeField] private GameObject GameOverWin;  //game over interface, Player win the game
+
+    [SerializeField] private GameObject DialogueInterface;  //dialogue interface
+    [SerializeField] private GameObject startTalkButton;    //Start a conversation
+    [SerializeField] private GameObject continueTalkButton;  //Switch to the next conversation
+    [SerializeField] private GameObject closeTalkButton;   //Close the conversation
+
 
     [SerializeField] private TMP_Text HealthPoint;    //Text display of health value
     [SerializeField] private TMP_Text OxygenPoint;    //Text display of oxygen value
@@ -29,6 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] public bool PauseMenuShowed = false;
     [SerializeField] public bool BagMenuShowed = false;
     [SerializeField] public bool GameEnd = false;          //Whether the game wins or loses, the game is end
+    [SerializeField] public bool ConversationStart;
+    [SerializeField] public bool ConversationOver;
 
     public void ShowInGameUI()     //display interface
     {
@@ -155,6 +164,77 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void ShowStartTalkButton()   //display button
+    {
+        Debug.Log("Show  start talk button");
+        
+        startTalkButton.SetActive(true);
+    }
+
+    public void HideStartTalkButton()   //hide button
+    {
+        Debug.Log("hide talk button");
+
+        startTalkButton.SetActive(false);
+    }
+
+    public void ShowContinueTalkButton()   //display button
+    {
+        Debug.Log("Show continue talk button");
+
+        continueTalkButton.SetActive(true);
+    }
+
+    public void HideContinueTalkButton()   //hide button
+    {
+        Debug.Log("hide continue talk button");
+
+        continueTalkButton.SetActive(false);
+    }
+
+    public void ShowCloseTalkButton()   //display button
+    {
+        Debug.Log("Show close talk button");
+
+        closeTalkButton.SetActive(true);
+    }
+
+    public void HideCloseTalkButton()   //hide button
+    {
+        Debug.Log("hide close talk button");
+
+        closeTalkButton.SetActive(false);
+    }
+
+    public void StartTalk()   //start conversation, display dialogue interface
+    {
+        Debug.Log("start Talk");
+        DialogueInterface.SetActive(true);      //展示对话界面
+        HideInGameUI();      //隐藏其他界面
+        HideStartTalkButton();
+        DialogueTrigger.Instance.TriggerDialogue();     //触发对话
+        
+    }
+
+    public void ContinueTalk()   //next sentence
+    {
+        Debug.Log("Continue to Talk");
+        DialogueManager.Instance.DisplayNextSentence();     //切换到下一段对话
+
+    }
+
+    public void EndTalk()   //end conversation, hide dialogue interface
+    {
+        Debug.Log("end Talk");
+        DialogueInterface.SetActive(false);      //隐藏对话界面
+        ShowContinueTalkButton();
+        HideCloseTalkButton();
+        ShowInGameUI();
+        DialogueManager.Instance.changeBool();
+    }
+
+
+
     void Awake()
     {
         Instance = this;
@@ -168,7 +248,16 @@ public class UIManager : MonoBehaviour
         HealthPoint.text = "" + currentHealth;       //Synchronize the text of value
         OxygenPoint.text = "" + currentOxygen;
 
-        if(currentHealth == 0 || currentOxygen == 0)
+        ConversationOver = DialogueManager.Instance.ConversationOver;
+        if (ConversationOver)     //如果对话结束，那么显示关闭对话按钮
+        {
+            HideContinueTalkButton();    //隐藏按钮
+            ShowCloseTalkButton();       //显示按钮
+        }
+        ConversationStart = DialogueManager.Instance.ConversationStart;
+
+
+        if (currentHealth == 0 || currentOxygen == 0)
         {
             GameEnd = true;
             ShowGameOverDead();
@@ -229,6 +318,31 @@ public class UIManager : MonoBehaviour
             {
                 ReplayGame();
             }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.F))   //Shortcut keys to start conversation or finish conversation
+        {
+            if (InGameUIshowed)    //如果谈话按钮显示的话，则可以开始对话
+            {
+                 StartTalk();
+
+            } else if(!InGameUIshowed && ConversationOver)  //如果谈话结束的话，则可以结束对话
+            {
+                EndTalk();
+            }
+
+            
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.C))   //Shortcut keys to Switch to the next dialogue
+        {
+            if (!InGameUIshowed && ConversationStart) //如果谈话开始的话，则可以使用按钮
+            {
+                ContinueTalk();
+            }
+            
 
         }
     }

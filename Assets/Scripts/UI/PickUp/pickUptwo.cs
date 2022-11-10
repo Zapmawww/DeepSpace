@@ -5,6 +5,7 @@ using UnityEngine;
 public class pickUptwo : MonoBehaviour
 {
     public static pickUptwo Instance; //Instantiating the pickUpOXYGEN.cs
+    private bool isTriggered = false;
 
     [SerializeField] private GameObject item002;
 
@@ -18,15 +19,25 @@ public class pickUptwo : MonoBehaviour
 
     {
         UIManager.Instance.ShowpickUp002Info();
+        isTriggered = true;
     }
 
     public void OnTriggerExit(Collider other) //Hide button when not triggered
     {
         UIManager.Instance.HidepickUp002Info();
+        isTriggered = false;
     }
 
-    public void pickupitem002()
+    private void Update()
     {
-        item002.SetActive(false);
+        if (isTriggered)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                UIManager.Instance.pickUp002 = true;
+                UIManager.Instance.HidepickUp002Info();
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

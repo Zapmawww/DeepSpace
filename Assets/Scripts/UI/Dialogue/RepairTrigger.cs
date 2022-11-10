@@ -5,6 +5,7 @@ using UnityEngine;
 public class RepairTrigger : MonoBehaviour
 {
     public static RepairTrigger Instance; //Instantiating the RepairTrigger.cs
+    private bool isTriggered = false;
 
     void Awake()
     {
@@ -16,10 +17,25 @@ public class RepairTrigger : MonoBehaviour
 
     {
         UIManager.Instance.ShowRepairInfo();
+        isTriggered = true;
     }
 
     public void OnTriggerExit(Collider other) //Hide button when not triggered
     {
         UIManager.Instance.HideRepairInfo();
+        isTriggered = false;
+    }
+
+    private void Update()
+    {
+        if (isTriggered && UIManager.Instance.pickUp002 && UIManager.Instance.pickUp001)
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                UIManager.Instance.facilityFixed = true;
+                UIManager.Instance.HideRepairInfo();
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

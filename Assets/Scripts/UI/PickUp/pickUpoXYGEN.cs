@@ -7,6 +7,7 @@ public class pickUpoXYGEN : MonoBehaviour
     public static pickUpoXYGEN Instance; //Instantiating the pickUpOXYGEN.cs
 
     [SerializeField] private GameObject oxygentank;
+    private bool isTriggered = false;
 
     void Awake()
     {
@@ -18,16 +19,26 @@ public class pickUpoXYGEN : MonoBehaviour
 
     {
         UIManager.Instance.ShowpickUpOXYGENInfo();
+        isTriggered = true;
     }
 
     public void OnTriggerExit(Collider other) //Hide button when not triggered
     {
         UIManager.Instance.HidepickUpOXYGENInfo();
+        isTriggered = false;
     }
 
-    public void pickupOxygentank()
+    private void Update()
     {
-        oxygentank.SetActive(false);
-        Player.Instance.pickupOxygenTank();
+        if(isTriggered)
+        {
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                UIManager.Instance.pickUpox = true;
+                Player.Instance.pickupOxygenTank();
+                UIManager.Instance.HidepickUpOXYGENInfo();
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

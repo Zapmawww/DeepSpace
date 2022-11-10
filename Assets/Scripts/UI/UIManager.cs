@@ -358,13 +358,6 @@ public class UIManager : MonoBehaviour
         pickUpOXYGENInfo.SetActive(false);
     }
 
-    public void pickUpOXYGEN()   //pick up item
-    {
-        Debug.Log("pickUp OXYGEN ");
-        pickUpoXYGEN.Instance.pickupOxygentank();
-        pickUpox = true;
-        pickUpOXYGENInfo.SetActive(false);
-    }
 
     public void ShowpickUp001Info()   //display info
     {
@@ -378,15 +371,6 @@ public class UIManager : MonoBehaviour
         Debug.Log("hide pickUp001 information");
 
         pickUp001Info.SetActive(false);
-    }
-
-    public void pickUpitem001()   //pick up item
-    {
-        Debug.Log("pickUp item 001 ");
-        pickUpone.Instance.pickupitem001();
-        pickUp001 = true;
-        pickUp001Info.SetActive(false);
-        bag001Info.SetActive(true);
     }
 
     public void ShowpickUp002Info()   //display info
@@ -403,14 +387,6 @@ public class UIManager : MonoBehaviour
         pickUp002Info.SetActive(false);
     }
 
-    public void pickUpitem002()   //pick up item
-    {
-        Debug.Log("pickUp item 002 ");
-        pickUptwo.Instance.pickupitem002();
-        pickUp002 = true;
-        pickUp002Info.SetActive(false);
-        bag002Info.SetActive(true);
-    }
 
 
 
@@ -451,8 +427,6 @@ public class UIManager : MonoBehaviour
 
         if (pickUp001 && pickUp002)
         {
-            task9item.SetActive(true);
-            task10item.SetActive(true);
             backFacility.SetActive(true);
             fixbutton.SetActive(true);
         }
@@ -521,96 +495,96 @@ public class UIManager : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.F))   //Shortcut keys to start conversation or finish conversation
-        {
-            if (InGameUIshowed)    //如果谈话按钮显示的话，则可以开始对话
-            {
-                StartTalk();
+        //if (Input.GetKeyUp(KeyCode.F))   //Shortcut keys to start conversation or finish conversation
+        //{
+        //    if (InGameUIshowed)    //如果谈话按钮显示的话，则可以开始对话
+        //    {
+        //        StartTalk();
 
-            }
-            else if (!InGameUIshowed && ConversationOver)  //如果谈话结束的话，则可以结束对话
-            {
-                EndTalk();
-            }
+        //    }
+        //    else if (!InGameUIshowed && ConversationOver)  //如果谈话结束的话，则可以结束对话
+        //    {
+        //        EndTalk();
+        //    }
 
 
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.C))   //Shortcut keys to Switch to the next dialogue
-        {
-            if (!InGameUIshowed && ConversationStart) //如果谈话开始的话，则可以使用按钮
-            {
-                ContinueTalk();
-            }
+        //if (Input.GetKeyUp(KeyCode.C))   //Shortcut keys to Switch to the next dialogue
+        //{
+        //    if (!InGameUIshowed && ConversationStart) //如果谈话开始的话，则可以使用按钮
+        //    {
+        //        ContinueTalk();
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.G))   //Shortcut keys to Switch to the next dialogue
-        {
-            if (doorButtonshowed) //如果门按钮显示的话，则可以触发
-            {
-                if (doorOpened)
-                {
-                    DoorClose();
-                }
-                else
-                {
-                    DoorOpen();
-                }
-            }
+        //if (Input.GetKeyUp(KeyCode.G))   //Shortcut keys to Switch to the next dialogue
+        //{
+        //    if (doorButtonshowed) //如果门按钮显示的话，则可以触发
+        //    {
+        //        if (doorOpened)
+        //        {
+        //            DoorClose();
+        //        }
+        //        else
+        //        {
+        //            DoorOpen();
+        //        }
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.I))   //Shortcut keys to pick up oxygen tank
-        {
-            if (!pickUpox) //
-            {
-                pickUpOXYGEN();
-            }
+        //if (Input.GetKeyUp(KeyCode.I))   //Shortcut keys to pick up oxygen tank
+        //{
+        //    if (!pickUpox) //
+        //    {
+        //        pickUpOXYGEN();
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.U))   //Shortcut keys to pick up ITEM 001
-        {
-            if (!pickUp001) //
-            {
-                pickUpitem001();
-            }
+        //if (Input.GetKeyUp(KeyCode.U))   //Shortcut keys to pick up ITEM 001
+        //{
+        //    if (!pickUp001) //
+        //    {
+        //        pickUpitem001();
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.H))   //Shortcut keys to pick up item 002
-        {
-            if (!pickUp002) //
-            {
-                pickUpitem002();
-            }
+        //if (Input.GetKeyUp(KeyCode.H))   //Shortcut keys to pick up item 002
+        //{
+        //    if (!pickUp002) //
+        //    {
+        //        pickUpitem002();
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Z))   //Shortcut keys to pick up oxygen tank
-        {
-            if (!facilityFixed) //
-            {
-                FixRedFacility();
-                facilityFixed = true;
-                couldBack = true;
-            }
+        //if (Input.GetKeyUp(KeyCode.Z))   //Shortcut keys to pick up oxygen tank
+        //{
+        //    if (!facilityFixed) //
+        //    {
+        //        FixRedFacility();
+        //        facilityFixed = true;
+        //        couldBack = true;
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyUp(KeyCode.X))   //Shortcut keys to pick up oxygen tank
-        {
-            if (couldBack) //
-            {
-                ShowGameOverWin();
-            }
-            else
-            {
-                ShowGameOverLose();
-            }
+        //if (Input.GetKeyUp(KeyCode.X))   //Shortcut keys to pick up oxygen tank
+        //{
+        //    if (couldBack) //
+        //    {
+        //        ShowGameOverWin();
+        //    }
+        //    else
+        //    {
+        //        ShowGameOverLose();
+        //    }
 
-        }
+        //}
     }
 }

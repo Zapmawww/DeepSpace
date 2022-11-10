@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,7 @@ public class WeaponControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myComb=GetComponent<BasicCombatant>();
+        myComb =  GetComponent<BasicCombatant>();
         reloadInputName = KeyCode.R;
         currentBullet = bulletsMag;
         UpdateAmmoUI();

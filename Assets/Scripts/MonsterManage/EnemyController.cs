@@ -6,11 +6,13 @@ using UnityEngine.AI;
 
 public enum EnemyStates { GUARD, PATROL, CHASE, DEAD }  // State of guards, patrols, pursuits, death
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(BasicCombatant))]
 public class EnemyController : MonoBehaviour
 {
 
     private EnemyStates enemyStates;
     private NavMeshAgent agent;    //Make sure the variable component must exist
+    private BasicCombatant myComb;
 
     private Animator anim;
 
@@ -51,6 +53,7 @@ public class EnemyController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        myComb = GetComponent<BasicCombatant>();
 
         speed = agent.speed;
         guardPos = transform.position;
@@ -155,10 +158,18 @@ public class EnemyController : MonoBehaviour
                 {
                     isFollow = true;
                     agent.SetDestination(attackTarget.transform.position);
+                    if (attackTimer > 0) break;
                     if (Vector3.Distance(attackTarget.transform.position, transform.position) <= 3)
                     {
                         isHit = true;
-
+                        var comb = attackTarget.GetComponent<BasicCombatant>();
+                        if (comb != null)
+                            CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 }, "");
+                        else
+                        {
+                            Debug.LogError("Missing Combatant at attackTarget");
+                        }
+                        attackTimer = attackTime;
                     }
                     else
                     {

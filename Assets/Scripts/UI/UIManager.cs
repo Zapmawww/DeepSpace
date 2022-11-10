@@ -48,7 +48,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text doorButtonText;    //open or close
 
 
-    [SerializeField] public int currentHealth;       
+    public HealthBar healthBar; //Reference script HealthBar.cs
+    [SerializeField] public int currentHealth;
     [SerializeField] public int currentOxygen;
 
     [SerializeField] public bool InGameUIshowed = true;
@@ -210,7 +211,7 @@ public class UIManager : MonoBehaviour
     public void ShowStartTalkButton()   //display button
     {
         Debug.Log("Show  start talk button");
-        
+
         startTalkButton.SetActive(true);
     }
 
@@ -257,7 +258,7 @@ public class UIManager : MonoBehaviour
         HideStartTalkButton();
         DialogueTrigger.Instance.TriggerDialogue();     //触发对话
         TaskTrigger.Instance.TriggerTask(); //触发任务
-        
+
     }
 
     public void ContinueTalk()   //next sentence
@@ -415,14 +416,19 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
     }
-
+    private void Start()
+    {
+        healthBar.SetMaxHealth((int)Player.Instance.MaxHP);
+    }
     void Update()
     {
-        currentHealth = Player.Instance.currentHealth;      //Synchronize the data of the script Player.cs
+        currentHealth = (int)Player.Instance.CurrentHP;      //Synchronize the data of the script Player.cs
         currentOxygen = Player.Instance.currentOxygen;
 
         HealthPoint.text = "" + currentHealth;       //Synchronize the text of value
         OxygenPoint.text = "" + currentOxygen;
+
+        healthBar.SetHealth(currentHealth);
 
         ConversationOver = DialogueManager.Instance.ConversationOver;
         if (ConversationOver)     //如果对话结束，那么显示关闭对话按钮
@@ -435,7 +441,8 @@ public class UIManager : MonoBehaviour
         if (doorOpened)    //修改door button的文本
         {
             doorButtonText.text = "CLOSE";
-        } else
+        }
+        else
         {
             doorButtonText.text = "OPEN";
         }
@@ -448,7 +455,7 @@ public class UIManager : MonoBehaviour
             fixbutton.SetActive(true);
         }
 
-        if (currentHealth == 0 || currentOxygen == 0)
+        if (Player.Instance.IsDead || currentOxygen == 0)
         {
             GameEnd = true;
             ShowGameOverDead();
@@ -458,7 +465,7 @@ public class UIManager : MonoBehaviour
         {
             if (PauseMenuShowed && !InGameUIshowed)   //It can only be triggered when the  pause menu interface is displayed
             {
-                HidePauseMenu(); 
+                HidePauseMenu();
             }
             else if (!PauseMenuShowed && InGameUIshowed)
             {
@@ -495,7 +502,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Y))   //Shortcut keys to turn to scene 'main menu'
         {
             if (PauseMenuShowed || GameEnd)      //It can only be triggered when the pause menu interface is displayed  
-                                                // or game end
+                                                 // or game end
             {
                 BackToMainMenu();
             }
@@ -505,7 +512,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))   //Shortcut keys to reload scene 'main game'
         {
             if (PauseMenuShowed || GameEnd)      //It can only be triggered when the pause menu interface is displayed  
-                                                // or game end
+                                                 // or game end
             {
                 ReplayGame();
             }
@@ -516,14 +523,15 @@ public class UIManager : MonoBehaviour
         {
             if (InGameUIshowed)    //如果谈话按钮显示的话，则可以开始对话
             {
-                 StartTalk();
+                StartTalk();
 
-            } else if(!InGameUIshowed && ConversationOver)  //如果谈话结束的话，则可以结束对话
+            }
+            else if (!InGameUIshowed && ConversationOver)  //如果谈话结束的话，则可以结束对话
             {
                 EndTalk();
             }
 
-            
+
 
         }
 
@@ -533,7 +541,7 @@ public class UIManager : MonoBehaviour
             {
                 ContinueTalk();
             }
-            
+
         }
 
         if (Input.GetKeyUp(KeyCode.G))   //Shortcut keys to Switch to the next dialogue

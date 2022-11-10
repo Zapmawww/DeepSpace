@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(BasicCombatant))]
 public class WeaponControl : MonoBehaviour
 {
     public Transform shootPoint;
@@ -15,9 +16,10 @@ public class WeaponControl : MonoBehaviour
 
     public float fireRate = 0.1f;//射速
     private float fireTime;//计时器
+    private BasicCombatant myComb;
 
     [Header("KeySet")]
-    [SerializeField]private KeyCode reloadInputName;
+    [SerializeField] private KeyCode reloadInputName;
 
     [Header("UI")]
     public Text AmmoTextUI;
@@ -26,6 +28,7 @@ public class WeaponControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myComb=GetComponent<BasicCombatant>();
         reloadInputName = KeyCode.R;
         currentBullet = bulletsMag;
         UpdateAmmoUI();
@@ -35,7 +38,7 @@ public class WeaponControl : MonoBehaviour
     void Update()
     {
         gunShootInput = Input.GetMouseButton(0);//检测鼠标左键是否按下
-        if(gunShootInput)
+        if (gunShootInput)
         {
             GunFire();
         }
@@ -49,7 +52,7 @@ public class WeaponControl : MonoBehaviour
         {
             Reload();
         }
-     }
+    }
 
     /// <summary>
     /// 射击
@@ -63,13 +66,18 @@ public class WeaponControl : MonoBehaviour
         {
             return;
         }
-            
+
         //射击
         RaycastHit hit;
         Vector3 shootDirection = shootPoint.forward;//射击方向向前
-        if(Physics.Raycast(shootPoint.position,shootDirection,out hit,range))//100码（range）的射程，如果击中物体，则会将信息存放到 hit 中
+        if (Physics.Raycast(shootPoint.position, shootDirection, out hit, range))//100码（range）的射程，如果击中物体，则会将信息存放到 hit 中
         {
-            Debug.Log(hit.transform.name + "击中");
+            var comb = hit.collider.gameObject.GetComponent<BasicCombatant>();
+            if (comb != null)// hit combatants only
+            {
+                CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 }, "");
+                Debug.Log(hit.transform.name + "Hit");
+            }
         }
 
         currentBullet--;//每次射击子弹减一
@@ -91,14 +99,14 @@ public class WeaponControl : MonoBehaviour
     /// </summary>
     public void Reload()
     {
-        if(bulletLeft <=0) return;
+        if (bulletLeft <= 0) return;
 
         int bulletNeed = bulletsMag - currentBullet;//所需填装的弹药数量
 
         //int bullectReduce = (bulletLeft >= bulletNeed) ? bulletNeed : bulletLeft;
 
-      
-        if(bulletLeft >= bulletNeed)
+
+        if (bulletLeft >= bulletNeed)
         {
             bulletLeft = bulletLeft - bulletNeed;
         }
@@ -107,7 +115,7 @@ public class WeaponControl : MonoBehaviour
             bulletLeft = 0;
             bulletsMag = currentBullet + bulletLeft;
         }
-       
+
         //bulletLeft -= bullectReduce;//减少的备弹
         currentBullet += bulletNeed;//当前子弹数
         UpdateAmmoUI();

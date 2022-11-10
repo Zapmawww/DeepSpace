@@ -13,10 +13,6 @@ public class DialogueTrigger : MonoBehaviour
         Instance = this;
     }
 
-    public void TriggerDialogue()      //start the conversation
-    {
-        DialogueManager.Instance.StartDialogue(dialogue);
-    }
 
     public void OnTriggerEnter(Collider other)     //Show button when triggered
     {
@@ -35,6 +31,7 @@ public class DialogueTrigger : MonoBehaviour
         if (isTriggered && UIManager.Instance.InGameUIshowed && Input.GetKeyUp(KeyCode.F))
         {
             UIManager.Instance.StartTalk();
+            DialogueManager.Instance.StartDialogue(dialogue);
         }
         else if (!UIManager.Instance.InGameUIshowed && UIManager.Instance.ConversationOver && Input.GetKeyUp(KeyCode.F))  //如果谈话结束的话，则可以结束对话
         {

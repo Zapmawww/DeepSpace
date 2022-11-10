@@ -19,7 +19,7 @@ class Main4 : Story
             new Mission
             {
                 setup = () => { },
-                finalize = () => { },
+                finalize = () => { GameObject.Find("TransparentWall_2").SetActive(false); },
                 subTaskCheck = new()
                 {
                     () => {

@@ -17,6 +17,7 @@ public class DoorTrigger : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
+                UIManager.Instance.doorOpened = !UIManager.Instance.doorOpened;
                 door.SetActive(!door.activeInHierarchy);
             }
         }

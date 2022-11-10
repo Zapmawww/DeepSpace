@@ -34,6 +34,7 @@ public class pickUpone : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                UIManager.Instance.bag001Info.SetActive(true);
                 UIManager.Instance.pickUp001 = true;
                 UIManager.Instance.HidepickUp001Info();
                 gameObject.SetActive(false);

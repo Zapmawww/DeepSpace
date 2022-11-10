@@ -25,6 +25,7 @@ class Main7 : Story
                 },
                 subTaskProgress = new()
                 {
+                    0f,
                 },
                 subTaskText = new()
                 {

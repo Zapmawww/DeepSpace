@@ -69,6 +69,8 @@ public class WeaponControl : MonoBehaviour
         }
 
         //射击
+        var AS=GetComponent<AudioSource>();
+        AS.Play();
         RaycastHit hit;
         Vector3 shootDirection = shootPoint.forward;//射击方向向前
         if (Physics.Raycast(shootPoint.position, shootDirection, out hit, range))//100码（range）的射程，如果击中物体，则会将信息存放到 hit 中

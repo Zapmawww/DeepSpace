@@ -9,7 +9,7 @@ class Main1 : Story
 
     public override int StoryId => MakeID(true, 1);
 
-    public override string Content => "Try basic operations";
+    public override string Content => "Try basic operations, T for details";
 
     public Main1()
     {
@@ -18,7 +18,7 @@ class Main1 : Story
             new Mission
             {
                 setup = () => { },
-                finalize = () => { },
+                finalize = () => { GameObject.Find("TransparentWall_1").SetActive(false); },
                 subTaskCheck = new()
                 {
                     () => {

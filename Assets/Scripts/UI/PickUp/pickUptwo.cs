@@ -34,6 +34,7 @@ public class pickUptwo : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                UIManager.Instance.bag002Info.SetActive(true);
                 UIManager.Instance.pickUp002 = true;
                 UIManager.Instance.HidepickUp002Info();
                 gameObject.SetActive(false);

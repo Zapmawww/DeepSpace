@@ -33,8 +33,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pickUp001Info;
     [SerializeField] private GameObject pickUp002Info;
 
-    [SerializeField] private GameObject bag001Info;
-    [SerializeField] private GameObject bag002Info;
+    [SerializeField] public GameObject bag001Info;
+    [SerializeField] public GameObject bag002Info;
 
     [SerializeField] private GameObject task9item;
     [SerializeField] private GameObject task10item;
@@ -258,8 +258,6 @@ public class UIManager : MonoBehaviour
         DialogueInterface.SetActive(true);      //展示对话界面
         HideInGameUI();      //隐藏其他界面
         HideStartTalkButton();
-        DialogueTrigger.Instance.TriggerDialogue();     //触发对话
-        TaskTrigger.Instance.TriggerTask(); //触发任务
 
     }
 
@@ -272,6 +270,7 @@ public class UIManager : MonoBehaviour
 
     public void EndTalk()   //end conversation, hide dialogue interface
     {
+        DialogueManager.Instance.ConversationStart = false;
         Debug.Log("end Talk");
         DialogueInterface.SetActive(false);      //隐藏对话界面
         ShowContinueTalkButton();

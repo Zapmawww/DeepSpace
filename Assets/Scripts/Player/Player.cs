@@ -77,4 +77,21 @@ public class Player : MonoBehaviour
 
         oxygenBar.SetOxygen(currentOxygen);   //Synchronised bar values
     }
+
+    void addOxygen(int add)
+    {
+        currentOxygen += add;   //add oxygen values
+
+        if (currentOxygen >10)    //Avoid above 10
+        {
+            currentOxygen = 10;
+        }
+
+        oxygenBar.SetOxygen(currentOxygen);   //Synchronised bar values
+    }
+
+    public void pickupOxygenTank()
+    {
+        addOxygen(1);
+    }
 }

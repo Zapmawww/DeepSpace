@@ -6,8 +6,17 @@ using UnityEngine;
 /// </summary>
 class BasicCombatant : MonoBehaviour
 {
-    public double HitPoint { get; protected set; } = 10;
-    public double MaxHitPoint { get; protected set; } = 10;
+    public double maxHP = 10;
+    public double HitPoint { get; protected set; }
+    public double MaxHitPoint { get => maxHP; protected set => maxHP = value; }
+
+    /// <summary>
+    /// Initialization
+    /// </summary>
+    public void Awake()
+    {
+        HitPoint = maxHP;
+    }
 
     /// <summary>
     /// Simple healing algorithm. Modify by deriving new classes.

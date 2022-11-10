@@ -6,33 +6,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
+
+[RequireComponent(typeof(BasicCombatant))]
 public class Player : MonoBehaviour
 {
     public static Player Instance; //Instantiating the MenuManager
 
-    public int maxHealth = 100;    //Maximum health value
-    public int currentHealth;      //Current health value
-     
+    public bool IsDead { get => myComb.HitPoint == 0; }
+
+    public double CurrentHP => myComb.HitPoint;
+    public double MaxHP => myComb.MaxHitPoint;
+
     public int maxOxygen = 10;     //Maximum Oxygen value
     public int currentOxygen;      //Current Oxygen value
 
-    public HealthBar healthBar; //Reference script HealthBar.cs
     public OxygenBar oxygenBar; //Reference script OxygenBar.cs
 
-
+    private BasicCombatant myComb;
 
     void Awake()
     {
+        myComb = GetComponent<BasicCombatant>();
         Instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;     //Synchronised bar values
-        healthBar.SetMaxHealth(maxHealth);
-
-        currentOxygen = maxOxygen-1;
+        currentOxygen = maxOxygen - 1;
         //currentOxygen = maxOxygen;
         oxygenBar.SetMaxOxygen(maxOxygen);
 
@@ -55,15 +56,9 @@ public class Player : MonoBehaviour
     }
 
     void TakeDamage(int damage)
-    {  
-        currentHealth -= damage; //reduce health values
-
-        if (currentHealth < 0)    //Avoid reducing to a negative number
-        {
-            currentHealth = 0;
-        }
-
-        healthBar.SetHealth(currentHealth);   //Synchronised bar values
+    {
+        CombatSystem.AddCombatAct(myComb, myComb, new DamageDealer { RawValue = damage }, "Self damage test");
+        //UIManager.Instance.SetHealth((int)myComb.HitPoint);   //Synchronised bar values
     }
 
     void LoseOxygen(int lose)

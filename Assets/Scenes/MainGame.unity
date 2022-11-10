@@ -318,6 +318,7 @@ GameObject:
   - component: {fileID: 51544277}
   - component: {fileID: 51544281}
   - component: {fileID: 51544282}
+  - component: {fileID: 51544283}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -444,6 +445,19 @@ MonoBehaviour:
   reloadInputName: 277
   AmmoTextUI: {fileID: 1776289490}
   CrossPoint: {fileID: 382536534}
+--- !u!114 &51544283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51544276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cd26f9a21782b4586c3c97d1c5da1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 10
 --- !u!1 &66687508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,6 +1761,7 @@ MonoBehaviour:
   HealthPoint: {fileID: 776880947}
   OxygenPoint: {fileID: 476229100}
   doorButtonText: {fileID: 1232624540}
+  healthBar: {fileID: 802550568}
   currentHealth: 0
   currentOxygen: 0
   InGameUIshowed: 1
@@ -5649,6 +5664,7 @@ GameObject:
   - component: {fileID: 793164130}
   - component: {fileID: 793164129}
   - component: {fileID: 793164128}
+  - component: {fileID: 793164135}
   - component: {fileID: 793164132}
   - component: {fileID: 793164133}
   - component: {fileID: 793164134}
@@ -5731,7 +5747,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793164126}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 20.1, y: 3.09, z: 7.03}
+  m_LocalPosition: {x: 20.1, y: 3.09, z: -20.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5797,12 +5813,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b6dc6c68375de4285159cf10bd0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
   maxOxygen: 10
   currentOxygen: 0
-  healthBar: {fileID: 802550568}
   oxygenBar: {fileID: 1578189337}
+--- !u!114 &793164135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793164126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36368a4367b143a4b91565094ba75931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
 --- !u!1 &802550565
 GameObject:
   m_ObjectHideFlags: 0

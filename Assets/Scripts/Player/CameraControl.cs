@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float mouseSensitivity = 100f;//视线灵敏度
+    public float mouseSensitivity;//视线灵敏度
     public Transform playerBody;//玩家的位置
     public float yRotation = 0f;
 
@@ -21,17 +22,16 @@ public class CameraControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         yRotation -= mouseY;//将上下旋转轴值进行累加（鼠标反转
 
         yRotation = Mathf.Clamp(yRotation, -80f, 80f);//旋转角度设置
 
-        transform.localRotation =Quaternion.Euler(yRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up*mouseX);//横向旋转
+        playerBody.Rotate(Vector3.up * mouseX);//横向旋转
+        transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
 
 
     }

@@ -12,7 +12,7 @@ public class TaskManager : MonoBehaviour
     public TMP_Text task_1_Text;
     public TMP_Text task_2_Text;
 
-    private Queue<string> sentences;
+    public Queue<string> sentences;
 
     [SerializeField] public bool taskStart = false;    //Determining if a task is over
     [SerializeField] public bool taskOver = false;    //Determining if a task is over

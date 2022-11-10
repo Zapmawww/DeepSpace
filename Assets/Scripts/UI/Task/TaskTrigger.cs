@@ -24,11 +24,8 @@ public class TaskTrigger : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider other)     //Show button when triggered
-
     {
-      
-            TaskManager.Instance.DisplayNextSentence();
-        
+        TriggerTask();
     }
 
     public void OnTriggerExit(Collider other) //Hide button when not triggered
@@ -38,6 +35,6 @@ public class TaskTrigger : MonoBehaviour
 
     public void changeBool()
     {
-        
+
     }
 }

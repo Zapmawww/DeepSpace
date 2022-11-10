@@ -9,7 +9,7 @@ public class MoveToOutside : MonoBehaviour
     /// <summary>
     /// Chose a scene that expected to switch
     /// </summary>
-    public SceneAsset scene;
+    public Scene scene;
     /// <summary>
     /// The gameObject contains player collider
     /// </summary>

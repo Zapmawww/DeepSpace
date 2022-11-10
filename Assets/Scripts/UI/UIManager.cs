@@ -103,6 +103,7 @@ public class UIManager : MonoBehaviour
         HideInGameUI();
         PauseMenuShowed = true;
         PauseMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void ShowTaskMenu()    //display interface
@@ -127,6 +128,7 @@ public class UIManager : MonoBehaviour
         ShowInGameUI();
         PauseMenuShowed = false;
         PauseMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 
 

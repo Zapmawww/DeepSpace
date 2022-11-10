@@ -21,7 +21,10 @@ class Main6 : Story
             new Mission
             {
                 setup = () => { },
-                finalize = () => { },
+                finalize = () => {
+                    UIManager.Instance.backFacility.SetActive(true);
+                    UIManager.Instance.fixbutton.SetActive(true);
+                },
                 subTaskCheck = new()
                 {
                     () => {

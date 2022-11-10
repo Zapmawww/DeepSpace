@@ -39,8 +39,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject task9item;
     [SerializeField] private GameObject task10item;
     [SerializeField] private GameObject redFacility;
-    [SerializeField] private GameObject fixbutton;
-    [SerializeField] private GameObject backFacility;
+    [SerializeField] public GameObject fixbutton;
+    [SerializeField] public GameObject backFacility;
 
 
     [SerializeField] private TMP_Text HealthPoint;    //Text display of health value
@@ -422,12 +422,6 @@ public class UIManager : MonoBehaviour
         else
         {
             doorButtonText.text = "OPEN";
-        }
-
-        if (pickUp001 && pickUp002)
-        {
-            backFacility.SetActive(true);
-            fixbutton.SetActive(true);
         }
 
         if (Player.Instance.IsDead || currentOxygen == 0)

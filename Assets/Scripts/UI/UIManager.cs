@@ -26,6 +26,22 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject doorButton;
 
+    [SerializeField] private GameObject repairInfo;
+    [SerializeField] private GameObject backInfo;
+
+    [SerializeField] private GameObject pickUpOXYGENInfo;
+    [SerializeField] private GameObject pickUp001Info;
+    [SerializeField] private GameObject pickUp002Info;
+
+    [SerializeField] private GameObject bag001Info;
+    [SerializeField] private GameObject bag002Info;
+
+    [SerializeField] private GameObject task9item;
+    [SerializeField] private GameObject task10item;
+    [SerializeField] private GameObject redFacility;
+    [SerializeField] private GameObject fixbutton;
+    [SerializeField] private GameObject backFacility;
+
 
     [SerializeField] private TMP_Text HealthPoint;    //Text display of health value
     [SerializeField] private TMP_Text OxygenPoint;    //Text display of oxygen value
@@ -46,6 +62,13 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] public bool doorButtonshowed = false;   //判定门按钮是否显示
     [SerializeField] public bool doorOpened = false;   //判定门是否开着
+
+    [SerializeField] public bool pickUp001 = false;
+    [SerializeField] public bool pickUp002 = false;
+    [SerializeField] public bool pickUpox = false;
+
+    [SerializeField] public bool facilityFixed = false;
+    [SerializeField] public bool couldBack = false;
 
 
     //  [SerializeField] public bool CompletedTask_1;    //Determining if the task is completed
@@ -283,6 +306,112 @@ public class UIManager : MonoBehaviour
         Door.Instance.showDoor1();
     }
 
+    public void ShowRepairInfo()   //display info
+    {
+        Debug.Log("Show repair information");
+
+        repairInfo.SetActive(true);
+    }
+
+    public void HideRepairInfo()   //hide info
+    {
+        Debug.Log("hide repair information");
+
+        repairInfo.SetActive(false);
+    }
+
+    public void FixRedFacility()   //fix the red facility
+    {
+        Debug.Log("fix the red facility");
+
+        redFacility.SetActive(false);
+        repairInfo.SetActive(false) ;
+    }
+
+    public void ShowBackInfo()   //display info
+    {
+        Debug.Log("Show back information");
+
+        backInfo.SetActive(true);
+    }
+
+    public void HideBackInfo()   //hide info
+    {
+        Debug.Log("hide back information");
+
+        backInfo.SetActive(false);
+    }
+
+    public void ShowpickUpOXYGENInfo()   //display info
+    {
+        Debug.Log("Show pickUpOXYGEN information");
+
+        pickUpOXYGENInfo.SetActive(true);
+    }
+
+    public void HidepickUpOXYGENInfo()   //hide info
+    {
+        Debug.Log("hide pickUpOXYGEN information");
+
+        pickUpOXYGENInfo.SetActive(false);
+    }
+
+    public void pickUpOXYGEN()   //pick up item
+    {
+        Debug.Log("pickUp OXYGEN ");
+        pickUpoXYGEN.Instance.pickupOxygentank();
+        pickUpox = true;
+        pickUpOXYGENInfo.SetActive(false);
+    }
+
+    public void ShowpickUp001Info()   //display info
+    {
+        Debug.Log("Show pickUp001 information");
+
+        pickUp001Info.SetActive(true);
+    }
+
+    public void HidepickUp001Info()   //hide info
+    {
+        Debug.Log("hide pickUp001 information");
+
+        pickUp001Info.SetActive(false);
+    }
+
+    public void pickUpitem001()   //pick up item
+    {
+        Debug.Log("pickUp item 001 ");
+        pickUpone.Instance.pickupitem001();
+        pickUp001 = true;
+        pickUp001Info.SetActive(false);
+        bag001Info.SetActive(true);
+    }
+
+    public void ShowpickUp002Info()   //display info
+    {
+        Debug.Log("Show pickUp002 information");
+
+        pickUp002Info.SetActive(true);
+    }
+
+    public void HidepickUp002Info()   //hide info
+    {
+        Debug.Log("hide pickUp002 information");
+
+        pickUp002Info.SetActive(false);
+    }
+
+    public void pickUpitem002()   //pick up item
+    {
+        Debug.Log("pickUp item 002 ");
+        pickUptwo.Instance.pickupitem002();
+        pickUp002 = true;
+        pickUp002Info.SetActive(false);
+        bag002Info.SetActive(true);
+    }
+
+
+
     void Awake()
     {
         Instance = this;
@@ -318,6 +447,13 @@ public class UIManager : MonoBehaviour
             doorButtonText.text = "OPEN";
         }
 
+        if (pickUp001 && pickUp002)
+        {
+            task9item.SetActive(true);
+            task10item.SetActive(true);
+            backFacility.SetActive(true);
+            fixbutton.SetActive(true);
+        }
 
         if (Player.Instance.IsDead || currentOxygen == 0)
         {
@@ -424,5 +560,55 @@ public class UIManager : MonoBehaviour
 
         }
 
+        if (Input.GetKeyUp(KeyCode.I))   //Shortcut keys to pick up oxygen tank
+        {
+            if (!pickUpox) //
+            {
+                pickUpOXYGEN();
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.U))   //Shortcut keys to pick up ITEM 001
+        {
+            if (!pickUp001) //
+            {
+                pickUpitem001();
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.H))   //Shortcut keys to pick up item 002
+        {
+            if (!pickUp002) //
+            {
+                pickUpitem002();
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Z))   //Shortcut keys to pick up oxygen tank
+        {
+            if (!facilityFixed) //
+            {
+                FixRedFacility();
+                facilityFixed = true;
+                couldBack = true;
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))   //Shortcut keys to pick up oxygen tank
+        {
+            if (couldBack) //
+            {
+                ShowGameOverWin();
+            }
+            else
+            {
+                ShowGameOverLose();
+            }
+
+        }
     }
 }

@@ -8,7 +8,7 @@ class Main7 : Story
 {
     public override string Name => "Return!";
 
-    public override int StoryId => MakeID(true, 3);
+    public override int StoryId => MakeID(true, 7);
 
     public override string Content => "Fix and run";
 

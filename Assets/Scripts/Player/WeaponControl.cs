@@ -78,7 +78,7 @@ public class WeaponControl : MonoBehaviour
             var comb = hit.collider.gameObject.GetComponent<BasicCombatant>();
             if (comb != null)// hit combatants only
             {
-                CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 }, "");
+                CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 });
                 Debug.Log(hit.transform.name + "Hit");
             }
         }

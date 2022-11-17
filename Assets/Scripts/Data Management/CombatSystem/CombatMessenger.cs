@@ -27,4 +27,5 @@ class DamageDealer : CombatMessenger
 class Buffs : CombatMessenger
 {
     public string buffName;
+    public float duration;
 }

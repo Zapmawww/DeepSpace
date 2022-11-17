@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-        CombatSystem.AddCombatAct(myComb, myComb, new DamageDealer { RawValue = damage }, "Self damage test");
+        CombatSystem.AddCombatAct(myComb, myComb, new DamageDealer { RawValue = damage });
         //UIManager.Instance.SetHealth((int)myComb.HitPoint);   //Synchronised bar values
     }
 

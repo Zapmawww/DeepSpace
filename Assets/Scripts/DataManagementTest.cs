@@ -71,31 +71,33 @@ public class DataManagementTest : MonoBehaviour
             // AddCombatAct and Messenger test
             Debug.Log("Combat test:");
             Debug.Log(cbt.HitPoint);
-            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 5 }, "self hit 5");
+            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 5 });
             Debug.Log(cbt.HitPoint);
-            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 2 }, "self heal 2");
+            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 2 });
             Debug.Log(cbt.HitPoint);
-            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 5 }, "self heal 5");
+            CombatSystem.AddCombatAct(cbt, cbt, new Healer { RawValue = 5 });
             Debug.Log(cbt.HitPoint);
 
-            bool ret = CombatSystem.AddCombatAct(cbt, cbt, new Buffs { RawValue = 5, buffName="test Buff" }, "add a buff for 5 seconds");
-            Debug.Log(ret);// should be false
+            var ret = CombatSystem.AddCombatAct(cbt, cbt, new Buffs { RawValue = 5, buffName = "test Buff" });
+            Debug.Log(ret.valid);// should be false
+            Debug.Log(ret.invalidReason);// should be "Unsupported"
 
             // LogAnalyse test
             var rawHealCnt = CombatSystem.TargetLogAnalyse(cbt, (double acc, CombatSystem.ComabatLog log) => acc + (log.cm is Healer h ? h.RawValue : 0));
             Debug.Log(rawHealCnt);
             var finalHealCnt = CombatSystem.TargetLogAnalyse(cbt, (double acc, CombatSystem.ComabatLog log) => acc + (log.cm is Healer h ? h.FinalValue : 0));
             Debug.Log(finalHealCnt);
-            var invalidCnt = CombatSystem.TargetLogAnalyse(cbt, (int acc, CombatSystem.ComabatLog log) => acc + (log.succeeded ? 0 : 1));
+            var invalidCnt = CombatSystem.TargetLogAnalyse(cbt, (int acc, CombatSystem.ComabatLog log) => acc + (log.result.valid ? 0 : 1));
             Debug.Log(invalidCnt);
 
             // Death action test
-            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 50 }, "self hit 50");
+            CombatSystem.AddCombatAct(cbt, cbt, new DamageDealer { RawValue = 50 });
 
             CombatSystem.Clean();
         }
 
     }
+
 
     // Update is called once per frame
     void Update()

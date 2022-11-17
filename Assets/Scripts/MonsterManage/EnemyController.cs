@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
         {
             var comb = attackTarget.GetComponent<BasicCombatant>();
             if (comb != null)
-                CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 }, "");
+                CombatSystem.AddCombatAct(myComb, comb, new DamageDealer { RawValue = 5 });
             else
             {
                 Debug.LogError("Missing Combatant at attackTarget");

@@ -8,7 +8,7 @@ class Main4 : Story
 {
     public override string Name => "Repair!";
 
-    public override int StoryId => MakeID(true, 3);
+    public override int StoryId => MakeID(true, 4);
 
     public override string Content => "Step closer to the RED facility";
 
@@ -19,13 +19,14 @@ class Main4 : Story
             new Mission
             {
                 setup = () => { },
-                finalize = () => { GameObject.Find("TransparentWall_2").SetActive(false); },
+                finalize = () => { 
+                    GameObject.Find("TransparentWall_2").SetActive(false);
+                    GameObject.Find("Main3Trigger").SetActive(false);
+                },
                 subTaskCheck = new()
                 {
                     () => {
-                        Debug.Log(null==GameObject.Find("Main3Trigger"));
-                        Debug.Log(null==GameObject.Find("Main3Trigger").GetComponent<StoryTrigger>());
-                        if(GameObject.Find("Main3Trigger").GetComponent<StoryTrigger>().isTriggered)
+                        if(GameObject.Find("Main3Trigger").GetComponent<StoryTrigger>().IsTriggered)
                             missList[0].subTaskProgress[0] = 1.0f;
                     },
                 },

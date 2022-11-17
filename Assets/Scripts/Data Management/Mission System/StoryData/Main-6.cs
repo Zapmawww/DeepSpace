@@ -8,7 +8,7 @@ class Main6 : Story
 {
     public override string Name => "Fight!";
 
-    public override int StoryId => MakeID(true, 3);
+    public override int StoryId => MakeID(true, 6);
 
     public override string Content => "Go outside and kill 2 wolves";
 

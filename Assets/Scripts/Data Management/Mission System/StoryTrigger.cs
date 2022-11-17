@@ -1,16 +1,20 @@
 ﻿
+using System;
 using UnityEngine;
 
 class StoryTrigger : MonoBehaviour
 {
-    public bool isTriggered = false;
+    public bool IsTriggered { get; private set; }
+    public bool reuseable = false;
+    public Action myCallback = null;
     private void OnTriggerEnter(Collider other)
     {
-        isTriggered = true;
+        IsTriggered = true;
+        if (myCallback != null) myCallback();
+        if (!reuseable) gameObject.SetActive(false);
     }
     private void OnTriggerExit(Collider other)
     {
-        isTriggered = false;
-        gameObject.SetActive(false);
+        IsTriggered = false;
     }
 }

@@ -8,7 +8,7 @@ class Main5 : Story
 {
     public override string Name => "Grab!";
 
-    public override int StoryId => MakeID(true, 3);
+    public override int StoryId => MakeID(true, 5);
 
     public override string Content => "Collect using F";
 

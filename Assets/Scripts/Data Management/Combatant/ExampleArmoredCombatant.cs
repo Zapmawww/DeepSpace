@@ -9,7 +9,7 @@ class ExampleArmoredCombatant : BasicCombatant
     /// </summary>
     public double Armor { get; protected set; } = 1;
 
-    override protected void Damage(CombatMessenger _CM)
+    override protected void Damage(BasicCombatant _Source, CombatMessenger _CM)
     {
         if (_CM.RawValue <= Armor) return;
 
@@ -17,7 +17,7 @@ class ExampleArmoredCombatant : BasicCombatant
         {
             _CM.FinalValue = HitPoint;
             HitPoint = 0;
-            DeathAction();
+            DeathAction(_Source);
         }
         else
         {

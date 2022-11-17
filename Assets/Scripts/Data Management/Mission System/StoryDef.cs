@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// The simple task in a story, with progress check, may contain not chronological sub tasks
+/// </summary>
 public class Mission
 {
     /// <summary>
@@ -23,6 +26,9 @@ public class Mission
     /// The description text of sub tasks
     /// </summary>
     public List<string> subTaskText;
+    /// <summary>
+    /// Test if this mission is completely finished
+    /// </summary>
     public bool Finished
     {
         get
@@ -38,6 +44,10 @@ public class Mission
         }
     }
 }
+
+/// <summary>
+/// The story may contain multiple chronological tasks, controls the dramatic elements
+/// </summary>
 public abstract class Story
 {
     /// <summary>
@@ -66,6 +76,9 @@ public abstract class Story
     /// List of missions in this story
     /// </summary>
     abstract public List<Mission> MissList { get; }
+    /// <summary>
+    /// The mission that is currentlt in progress
+    /// </summary>
     public int CurrentMission { get; set; } = 0;
     /// <summary>
     /// To determine the next story

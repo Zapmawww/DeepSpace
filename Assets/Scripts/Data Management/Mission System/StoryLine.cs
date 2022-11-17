@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+/// <summary>
+/// The story controller which holds the active instances of stories 
+/// </summary>
 public class StoryLine : MonoBehaviour
 {
     private Story first = new Main1();
@@ -14,7 +17,6 @@ public class StoryLine : MonoBehaviour
     {
         current = first;
         sides = new();
-        GameState.storyLine = this;
     }
 
     void Start()

@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-class StoryTrigger : MonoBehaviour
+public class StoryTrigger : MonoBehaviour
 {
     public bool IsTriggered { get; private set; }
     public bool reuseable = false;

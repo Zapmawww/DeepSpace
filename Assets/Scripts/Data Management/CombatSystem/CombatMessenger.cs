@@ -2,7 +2,7 @@
 /// <summary>
 /// Used for transfer combat info from a combatant to another
 /// </summary>
-abstract class CombatMessenger
+abstract public class CombatMessenger
 {
     /// <summary>
     /// Raw damage, heal, buff time, etc.

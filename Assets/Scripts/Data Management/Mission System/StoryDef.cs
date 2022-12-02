@@ -60,6 +60,22 @@ public abstract class Story
     {
         return _IsMain ? _ID : _ID << 16; //65535 is enough for this game
     }
+    static protected void SetPriorCombatTarget(Func<BasicCombatant, BasicCombatant, CombatMessenger, bool> _Callback)
+    {
+
+    }
+    static protected void SetLaterCombatTarget(Func<BasicCombatant, BasicCombatant, CombatMessenger, CombatActionReturn, bool> _Callback)
+    {
+
+    }
+    static protected void SetTriggerTarget(Func<bool> _Callback, StoryTrigger _Which)
+    {
+
+    }
+    static protected void SetInventoryTarget(Func<List<Item>, bool> _Callback)
+    {
+
+    }
     /// <summary>
     /// Story Name
     /// </summary>

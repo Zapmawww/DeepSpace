@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Basic Item class, implement this while creating any item class
 /// </summary>
-abstract class Item
+public abstract class Item
 {
     protected Item(Item _Item)
     { }

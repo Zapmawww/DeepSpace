@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// The return value of a combat action. Communicate with Combat System.
 /// </summary>
-class CombatActionReturn
+public class CombatActionReturn
 {
     /// <summary>
     /// Indicate if the action is valid to the combatant.
@@ -24,7 +24,7 @@ class CombatActionReturn
 /// A really basic combatant model contains HP and MaxHP. Add/Modify by deriving new classes. 
 /// Note: used for units receiving damage.
 /// </summary>
-class BasicCombatant : MonoBehaviour
+public class BasicCombatant : MonoBehaviour
 {
     public double maxHP = 10;
     public double HitPoint { get; protected set; }

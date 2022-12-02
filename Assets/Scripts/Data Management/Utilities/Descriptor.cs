@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// A basic descriptor including brief and k-v pairs
 /// </summary>
-struct Descriptor
+public struct Descriptor
 {
     /// <summary>
     /// Breif introduction, one sentence

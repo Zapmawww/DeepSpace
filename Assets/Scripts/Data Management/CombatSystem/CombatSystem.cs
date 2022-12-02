@@ -39,11 +39,11 @@ static class CombatSystem
     /// <summary>
     /// Contain all callback functions used to check the combat action before it is applied
     /// </summary>
-    static public List<Action<BasicCombatant, BasicCombatant, CombatMessenger>> PriorFuncs { get; private set; } = new();
+    static public List<Func<BasicCombatant, BasicCombatant, CombatMessenger, bool>> PriorFuncs { get; private set; } = new();
     /// <summary>
     /// Contain all callback functions used to check the combat action after it is applied
     /// </summary>
-    static public List<Action<BasicCombatant, BasicCombatant, CombatMessenger, CombatActionReturn>> LaterFuncs { get; private set; } = new();
+    static public List<Func<BasicCombatant, BasicCombatant, CombatMessenger, CombatActionReturn, bool>> LaterFuncs { get; private set; } = new();
     /// <summary>
     /// Clean all combat logs, e.g. after scene switching
     /// </summary>
@@ -66,10 +66,7 @@ static class CombatSystem
     static public CombatActionReturn AddCombatAct(BasicCombatant _Source, BasicCombatant _Target, CombatMessenger _CM)
     {
         //prior callbacks
-        foreach (var func in PriorFuncs)
-        {
-            func(_Source, _Target, _CM);
-        }
+        PriorFuncs.RemoveAll(func => func(_Source, _Target, _CM) == true);
 
         //act
         var ret = _Target.ReceiveCM(_Source, _CM);
@@ -95,10 +92,7 @@ static class CombatSystem
         }
 
         //later callbacks
-        foreach (var func in LaterFuncs)
-        {
-            func(_Source, _Target, _CM, ret);
-        }
+        LaterFuncs.RemoveAll(func => func(_Source, _Target, _CM, ret) == true);
 
         return ret;
     }

@@ -95,4 +95,15 @@ class Inventory
         ((StackableItem)newItem).Remove(si.Stacked);
         Items.Add((StackableItem)newItem);
     }
+    /// <summary>
+    /// Swap position of 2 items
+    /// </summary>
+    /// <param name="_Lhs">Item1</param>
+    /// <param name="_Rhs">Item2</param>
+    public void SwapItem(int _Lhs, int _Rhs)
+    {
+        var tmp = Items[_Lhs];
+        Items[_Lhs] = Items[_Rhs];
+        Items[_Rhs] = tmp;
+    }
 }
